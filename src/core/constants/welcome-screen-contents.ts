@@ -1,26 +1,28 @@
-import Slide1 from '../../../assets/images/welcome/quality-asset.png';
-import Slide2 from '../../../assets/images/welcome/superior.png';
-import Slide3 from '../../../assets/images/welcome/performance.png';
+import colors from '../config/colors';
 
-const welcomeScreenContents: any = [
+export const welcomeScreenContents: any = [
   {
-    image: Slide1,
+    bg: colors.lightOrange,
+    textColor: colors.orange,
+    image: require('../../../assets/images/welcome/quality-asset.png'),
     heading: 'Quality assets',
     subHeading:
-      'Avoid the stress of third-party agents. Send money directly from your smartphone or computer.',
+      'Rise invests your money into the best dollar investments around the world.',
   },
   {
-    image: Slide2,
+    bg: colors.lightIndigo,
+    textColor: colors.indigo,
+    image: require('../../../assets/images/welcome/superior.png'),
     heading: 'Superior Selection',
     subHeading:
-      'From bank transfers to airtime, recipients have multiple options to receive their money.',
+      'Our expert team and intelligent algorithms select assets that beat the markets.',
   },
   {
-    image: Slide3,
+    bg: colors.lightTeal,
+    textColor: colors.teal,
+    image: require('../../../assets/images/welcome/performance.png'),
     heading: 'Better Performance',
     subHeading:
-      'Use a platform you can trust. All our payment options are safe and your information is encrypted.',
+      'You earn more returns, achieve more of your financial goals and protect your money from devaluation.',
   },
 ];
-
-export default welcomeScreenContents;

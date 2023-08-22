@@ -1,31 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Toast from 'react-native-toast-message';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import appRouter from '../routes/router/app-router';
 import routes from '../routes/routes';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import localStorageKeys from '../core/constants/local-storage-keys';
 
 const Stack = createStackNavigator();
 
-const Main = () => {
-  const [initialRouteName, setinitialRouteName] = useState(
-    routes.welcomeScreen,
-  );
-
-  const checkIsAppOpened = async () => {
-    try {
-      let value: any = await AsyncStorage.getItem(localStorageKeys.appOpened);
-      value
-        ? setinitialRouteName(routes.loginOptionsScreen)
-        : setinitialRouteName(routes.welcomeScreen);
-    } catch (error) {}
-  };
-
-  useEffect(() => {
-    checkIsAppOpened();
-  }, []);
+export const Main = () => {
+  const [initialRouteName] = useState(routes.welcomeScreen);
 
   return (
     <>
@@ -45,5 +28,3 @@ const Main = () => {
     </>
   );
 };
-
-export default Main;
