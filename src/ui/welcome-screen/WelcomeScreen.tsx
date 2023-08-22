@@ -3,7 +3,9 @@ import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
 import {welcomeScreenContents} from '../../core/constants/welcome-screen-contents';
 import {Welcome} from '../components/Welcome';
 
-export const WelcomeScreen = () => {
+export const WelcomeScreen = props => {
+  const {navigation} = props;
+
   const [sliderState, setSliderState] = useState({currentPage: 0});
   const {width} = Dimensions.get('window');
   const {currentPage: pageIndex} = sliderState;
@@ -55,6 +57,7 @@ export const WelcomeScreen = () => {
             // eslint-disable-next-line react-native/no-inline-styles
             <View key={key} style={{width, flex: 1}}>
               <Welcome
+                navigation={navigation}
                 bg={slider.bg}
                 textColor={slider.textColor}
                 slideImage={slider.image}

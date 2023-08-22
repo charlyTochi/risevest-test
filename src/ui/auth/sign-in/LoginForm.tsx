@@ -6,6 +6,7 @@ import AppBtn from '../../components/AppBtn';
 import showToastUtil from '../../../core/utils/show-toast.util';
 import {ResponseType} from '../../../core/enums/response-type.enum';
 import Input from '../../components/AppInput';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export const LoginForm = (props: any) => {
   const {navigation} = props;
@@ -76,6 +77,14 @@ export const LoginForm = (props: any) => {
               isError={formikprops.errors.password ? true : false}
               isVisible={formikprops.values.password.length > 0}
               error={formikprops.errors.password}
+              suffixIcon={
+                <FontAwesome
+                  name={!showPassword ? 'eye-slash' : 'eye'}
+                  size={20}
+                  color={colors.primary}
+                  onPress={() => setShowPassword(!showPassword)}
+                />
+              }
             />
 
             <View style={styles.createAccountView}>

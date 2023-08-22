@@ -9,6 +9,7 @@ import Input from '../../components/AppInput';
 import PhoneCodeDropdown from '../../components/PhoneCodeDropdown';
 import {Countries} from '../../../core/constants/countries';
 import ModalSelect from '../../components/ModalSelect';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export const TellUsMoreForm = (props: any) => {
   const {navigation} = props;
@@ -117,6 +118,13 @@ export const TellUsMoreForm = (props: any) => {
               isError={formikprops.errors.nickName ? true : false}
               error={formikprops.errors.nickName}
               isVisible={formikprops.values.nickName.length > 0}
+              suffixIcon={
+                <FontAwesome
+                  name={'calendar'}
+                  size={20}
+                  color={colors.primary}
+                />
+              }
             />
 
             <View style={styles.createAccountView}>

@@ -10,6 +10,7 @@ import {
 import colors from '../../../core/config/colors';
 import {globalStyles} from '../../../core/config/global-styles';
 import {LoginForm} from './LoginForm';
+import routes from '../../../routes/routes';
 
 export const Login = (props: any) => {
   const {navigation} = props;
@@ -42,7 +43,11 @@ export const Login = (props: any) => {
       <View style={styles.footer}>
         <View style={{flexDirection: 'row'}}>
           <Text style={styles.footerText}>Don't have an account? </Text>
-          <Text style={styles.signUpText}>Sign up</Text>
+          <Text
+            style={styles.signUpText}
+            onPress={() => navigation.navigate(routes.signUpScreen)}>
+            Sign up
+          </Text>
         </View>
       </View>
     </KeyboardAvoidingView>

@@ -4,6 +4,7 @@ import colors from '../../core/config/colors';
 import {welcomeScreenContents} from '../../core/constants/welcome-screen-contents';
 import AppBtn from './AppBtn';
 import routes from '../../routes/routes';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export const Welcome = (props: any) => {
   const {
@@ -52,14 +53,23 @@ export const Welcome = (props: any) => {
               disabled={!isPrevButtonEnabled}
               style={[styles.button, styles.iconButton]}
               onPress={() => onPrevButtonPress()}>
-              <Text style={styles.buttonText}>Prev</Text>
+              <FontAwesome
+                name="arrow-left"
+                size={15}
+                color={!isPrevButtonEnabled ? colors.grey : textColor}
+              />
             </Pressable>
 
             <Pressable
               style={[styles.button, styles.iconButton]}
               onPress={() => onNextButtonPress()}>
-              <Text style={[{color: textColor}, styles.buttonText]}>Next</Text>
-              <Text style={styles.buttonText} />
+              <Text style={[{color: textColor}, styles.buttonText]}>Next </Text>
+              <FontAwesome
+                name="arrow-right"
+                size={15}
+                color={textColor}
+                style={{left: 8}}
+              />
             </Pressable>
           </View>
         )}
@@ -69,7 +79,7 @@ export const Welcome = (props: any) => {
             <AppBtn
               title="Sign Up"
               onPress={() => {
-                navigation.navigate(routes.homeScreen);
+                navigation.navigate(routes.signUpScreen);
               }}
               color={colors.primary}
               textColor={colors.white}
@@ -78,7 +88,7 @@ export const Welcome = (props: any) => {
               <AppBtn
                 title="Sign In"
                 onPress={() => {
-                  navigation.navigate(routes.homeScreen);
+                  navigation.navigate(routes.loginOptionsScreen);
                 }}
                 color={colors.offWhite}
                 textColor={colors.teal}

@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {Formik} from 'formik';
 import colors from '../../../core/config/colors';
 import AppBtn from '../../components/AppBtn';
 import showToastUtil from '../../../core/utils/show-toast.util';
 import {ResponseType} from '../../../core/enums/response-type.enum';
 import Input from '../../components/AppInput';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import routes from '../../../routes/routes';
 
 export const SignUpForm = (props: any) => {
   const {navigation} = props;
@@ -13,8 +15,7 @@ export const SignUpForm = (props: any) => {
   const [isBusy, setIsBusy] = useState(false);
 
   const handleSubmit = async (data: any) => {
-    setIsBusy(true);
-
+    navigation.navigate(routes.tellUsMore);
     try {
     } catch (error: any) {
       showToastUtil(ResponseType.error);
@@ -76,13 +77,21 @@ export const SignUpForm = (props: any) => {
               isError={formikprops.errors.password ? true : false}
               isVisible={formikprops.values.password.length > 0}
               error={formikprops.errors.password}
+              suffixIcon={
+                <FontAwesome
+                  name={!showPassword ? 'eye-slash' : 'eye'}
+                  size={20}
+                  color={colors.primary}
+                  onPress={() => setShowPassword(!showPassword)}
+                />
+              }
             />
 
-            <Text style={styles.passwordText}>* Minimum of 8 characters</Text>
+            {/* <Text style={styles.passwordText}>* Minimum of 8 characters</Text> */}
 
             <View style={styles.createAccountView}>
               <AppBtn
-                title="Create Account"
+                title="Sign Up"
                 onPress={formikprops.handleSubmit}
                 isBusy={isBusy}
                 isDisabled={
