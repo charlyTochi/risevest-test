@@ -9,8 +9,9 @@ export const Splash = () => {
         source={require('../../../../assets/images/logo.png')}
         style={styles.logo}
       />
-      <Text style={styles.text}>Dollar investments that</Text>
-      <Text style={styles.text}>help you grow</Text>
+      <Text style={styles.text}>
+        Dollar investments that {'\n'} help you grow
+      </Text>
       <View style={styles.footer}>
         <Text style={styles.footerText}>All rights reserved</Text>
         <Text style={styles.footerText}>(c) 2021</Text>

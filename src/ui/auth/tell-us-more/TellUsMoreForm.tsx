@@ -8,6 +8,7 @@ import {ResponseType} from '../../../core/enums/response-type.enum';
 import Input from '../../components/AppInput';
 import PhoneCodeDropdown from '../../components/PhoneCodeDropdown';
 import {Countries} from '../../../core/constants/countries';
+import ModalSelect from '../../components/ModalSelect';
 
 export const TellUsMoreForm = (props: any) => {
   const {navigation} = props;
@@ -107,6 +108,7 @@ export const TellUsMoreForm = (props: any) => {
             />
 
             <Input
+              prefix={<ModalSelect />}
               textInputProps={{
                 placeholder: 'Date of Birth',
                 onChangeText: formikprops.handleChange('nick-name'),

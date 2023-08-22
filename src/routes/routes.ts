@@ -6,4 +6,5 @@ export default {
   splashScreen: 'splash',
   loginOptionsScreen: 'login',
   tellUsMore: 'tell-us-more',
+  successPage: 'success-page',
 };
