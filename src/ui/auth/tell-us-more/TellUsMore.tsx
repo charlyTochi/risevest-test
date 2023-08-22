@@ -36,6 +36,16 @@ export const TellUsMore = (props: any) => {
         </View>
 
         <TellUsMoreForm navigation={navigation} />
+
+        <View style={styles.firstTextView}>
+          <Text style={styles.tc1}>
+            By clicking continue, you agree to our{' '}
+          </Text>
+          <Text style={styles.tc2}>
+            <Text>Terms & Conditions</Text> <Text style={styles.tc1}>and</Text>{' '}
+            <Text style={styles.tc2}>Privacy Policy</Text>
+          </Text>
+        </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -61,5 +71,20 @@ const styles = StyleSheet.create({
     color: colors.darkGrey,
     marginTop: 10,
     lineHeight: 22,
+  },
+  firstTextView: {
+    marginTop: 20,
+    marginBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+  },
+  tc1: {
+    color: colors.black,
+    fontFamily: 'DMSans Regular',
+  },
+  tc2: {
+    color: colors.primary,
+    fontFamily: 'DMSans Regular',
   },
 });

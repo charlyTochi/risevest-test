@@ -132,17 +132,6 @@ export const TellUsMoreForm = (props: any) => {
                 }
               />
             </View>
-
-            <View style={styles.firstTextView}>
-              <Text style={{color: colors.black}}>
-                By clicking continue, you agree to our{' '}
-              </Text>
-              <Text style={{color: colors.primary}}>
-                <Text>Terms & Conditions</Text>{' '}
-                <Text style={{color: colors.black}}>and</Text>{' '}
-                <Text>Privacy Policy</Text>
-              </Text>
-            </View>
           </View>
         )}
       </Formik>
@@ -161,13 +150,7 @@ const styles = StyleSheet.create({
   instructionMainView: {
     marginTop: 20,
   },
-  firstTextView: {
-    marginTop: 20,
-    marginBottom: 10,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-  },
+
   createAccountView: {
     marginTop: 20,
   },
