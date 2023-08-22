@@ -38,7 +38,10 @@ const PhoneCodeDropdown = (props: {
             <View style={styles.diallingCodeView}>
               <View style={styles.diallingCodeViewUrl}>
                 <Image source={currentCountry.flagUrl} style={styles.img} />
-                <Text>{`${currentCountry?.diallingCode}`}</Text>
+                <Text
+                  style={
+                    styles.countryCodeTxt
+                  }>{`${currentCountry?.diallingCode}`}</Text>
               </View>
             </View>
           )}
@@ -157,5 +160,10 @@ const styles = StyleSheet.create({
 
   locationLabelView: {
     flexDirection: 'row',
+  },
+  countryCodeTxt: {
+    color: colors.black,
+    fontFamily: 'DMSans Regular',
+    fontWeight: '700',
   },
 });
