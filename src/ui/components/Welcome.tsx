@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   },
   headerTxt: {
     marginBottom: 20,
-    fontFamily: 'Hanken Grotesk Medium',
+    fontFamily: 'Hanken-Grotesk-Medium',
     fontSize: 20,
     marginHorizontal: 20,
   },

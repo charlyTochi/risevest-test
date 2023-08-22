@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import colors from '../../../core/config/colors';
 import {globalStyles} from '../../../core/config/global-styles';
-import {LoginForm} from './LoginForm';
+import {TellUsMoreForm} from './TellUsMoreForm';
 
-export const Login = (props: any) => {
+export const TellUsMore = (props: any) => {
   const {navigation} = props;
   return (
     <KeyboardAvoidingView
@@ -27,24 +27,16 @@ export const Login = (props: any) => {
               ...globalStyles.header,
               color: colors.black,
             }}>
-            Welcome back
+            Tell Us More About You
           </Text>
 
           <Text style={styles.description}>
-            Let’s get you logged in to get back to building your
-            dollar-denominated investment portfolio.{' '}
+            Please use your name as it appears on your ID.
           </Text>
         </View>
 
-        <LoginForm navigation={navigation} />
+        <TellUsMoreForm navigation={navigation} />
       </ScrollView>
-
-      <View style={styles.footer}>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={styles.footerText}>Don't have an account? </Text>
-          <Text style={styles.signUpText}>Sign up</Text>
-        </View>
-      </View>
     </KeyboardAvoidingView>
   );
 };
@@ -69,24 +61,5 @@ const styles = StyleSheet.create({
     color: colors.darkGrey,
     marginTop: 10,
     lineHeight: 22,
-  },
-  footer: {
-    position: 'absolute',
-    bottom: 30,
-    alignSelf: 'center',
-  },
-  signUpText: {
-    textAlign: 'center',
-    fontFamily: 'Hanken Grotesk Regular',
-    color: colors.primary,
-    fontSize: 15,
-    fontWeight: '700',
-  },
-  footerText: {
-    textAlign: 'center',
-    fontFamily: 'Hanken Grotesk Regular',
-    color: colors.darkGrey,
-    fontSize: 15,
-    fontWeight: '700',
   },
 });

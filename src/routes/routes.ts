@@ -5,4 +5,5 @@ export default {
   welcomeScreen: 'welcome',
   splashScreen: 'splash',
   loginOptionsScreen: 'login',
+  tellUsMore: 'tell-us-more',
 };

@@ -11,4 +11,8 @@ export default {
   lightTeal: '#f6fffe',
   grey: '#C0C0C0',
   offWhite: '#71879C1A',
+  red: '#F27474',
+  danger: '#FC171B',
+  darkGrey: '#71879C',
+  success: '#56C596',
 };

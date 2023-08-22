@@ -2,6 +2,7 @@ import {Home} from '../../ui/app/home/Home';
 import {Login} from '../../ui/auth/sign-in/Login';
 import {SignUp} from '../../ui/auth/sign-up/SignUp';
 import {Splash} from '../../ui/auth/splash/SplashScreen';
+import {TellUsMore} from '../../ui/auth/tell-us-more/TellUsMore';
 import {WelcomeScreen} from '../../ui/welcome-screen/WelcomeScreen';
 import routes from '../routes';
 
@@ -11,14 +12,19 @@ const appRouter = [
     component: Home,
   },
 
-  // {
-  //   route: routes.loginOptionsScreen,
-  //   component: Login,
-  // },
-  // {
-  //   route: routes.signUpScreen,
-  //   component: SignUp,
-  // },
+  {
+    route: routes.loginOptionsScreen,
+    component: Login,
+  },
+
+  {
+    route: routes.tellUsMore,
+    component: TellUsMore,
+  },
+  {
+    route: routes.signUpScreen,
+    component: SignUp,
+  },
 
   {
     route: routes.welcomeScreen,
