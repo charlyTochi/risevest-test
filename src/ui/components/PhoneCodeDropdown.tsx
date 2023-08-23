@@ -6,6 +6,7 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import colors from '../../core/config/colors';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Countries} from '../../core/constants/countries';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const PhoneCodeDropdown = (props: {
   selectedCountry: any;
@@ -83,12 +84,7 @@ const PhoneCodeDropdown = (props: {
                   </View>
                 </View>
                 {location.diallingCode === currentCountry.diallingCode && (
-                  <Text>sfsdfds</Text>
-                  //   <Ionicons
-                  //     name="md-checkmark-circle"
-                  //     size={25}
-                  //     color={colors.success}
-                  //   />
+                  <FontAwesome name="circle" size={25} color={colors.success} />
                 )}
               </Pressable>
             ))}
