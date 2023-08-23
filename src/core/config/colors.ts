@@ -15,4 +15,5 @@ export default {
   danger: '#FC171B',
   darkGrey: '#71879C',
   success: '#56C596',
+  green: '#27BF41',
 };

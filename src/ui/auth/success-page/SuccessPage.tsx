@@ -3,17 +3,16 @@ import {Image, Text, View, StyleSheet} from 'react-native';
 import colors from '../../../core/config/colors';
 import AppBtn from '../../components/AppBtn';
 
-export const SuccessPage = () => {
+export const SuccessPage = (props: {title: any; description: any}) => {
+  const {title, description} = props;
   return (
     <View style={styles.container}>
       <Image
         source={require('../../../../assets/images/onboarding/success.png')}
         style={styles.logo}
       />
-      <Text style={styles.text}>You just created your {'\n'} Rise account</Text>
-      <Text style={styles.desc}>
-        Welcome to Rise, let's take {'\n'} you home
-      </Text>
+      <Text style={styles.text}>{title}</Text>
+      <Text style={styles.desc}>{description}</Text>
       <View style={styles.footer}>
         <AppBtn
           title="Okay"

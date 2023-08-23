@@ -7,7 +7,7 @@ import {globalStyles} from '../../../core/config/global-styles';
 export const CreatePin = () => {
   const [otp, setOtp] = useState('');
 
-  const handleNumberPress = number => {
+  const handleNumberPress = (number: string) => {
     if (number !== '.') {
       if (otp.length < 6) {
         setOtp(otp + number);
@@ -21,7 +21,7 @@ export const CreatePin = () => {
     }
   };
 
-  const verifyOtp = value => {
+  const verifyOtp = (value: string) => {
     console.log(value);
   };
 
@@ -65,7 +65,10 @@ export const CreatePin = () => {
           </Pressable>
         ))}
         <Pressable onPress={handleDelete} style={styles.deleteButton}>
-          <Image source={require('../../../../assets/images/delete.png')} />
+          <Image
+            source={require('../../../../assets/images/delete.png')}
+            style={{marginTop: 8}}
+          />
         </Pressable>
       </View>
     </View>
@@ -105,9 +108,8 @@ const styles = StyleSheet.create({
     margin: 5,
     width: '30%',
     borderRadius: 100,
-    borderWidth: 1,
-    borderColor: '#000',
     alignItems: 'center',
+    backgroundColor: colors.offWhite,
   },
   nonClickableButton: {
     backgroundColor: '#EEE',
@@ -116,12 +118,13 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 5,
     width: '30%',
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: colors.primary,
+    borderRadius: 25,
     alignItems: 'center',
+    backgroundColor: colors.offWhite,
   },
   numberButtonText: {
-    fontSize: 18,
+    fontSize: 30,
+    color: colors.primary,
+    fontWeight: '700',
   },
 });

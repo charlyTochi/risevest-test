@@ -1,7 +1,8 @@
 import React from 'react';
-import {StyleSheet, Text, Pressable, Keyboard} from 'react-native';
+import {StyleSheet, Text, Pressable, Keyboard, View} from 'react-native';
 import colors from '../../core/config/colors';
 import {Circle} from 'react-native-animated-spinkit';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const AppBtn = (props: any) => {
   const {
@@ -11,7 +12,9 @@ const AppBtn = (props: any) => {
     isDisabled,
     type,
     color,
+    icon,
     moreButtonStyles,
+    borderColor,
     textColor = colors.white,
   } = props;
   return (
@@ -31,7 +34,7 @@ const AppBtn = (props: any) => {
                 ,
                 {
                   ...styles.btnOutline,
-                  borderColor: color ? color : colors.primary,
+                  borderColor: borderColor,
                   opacity: isDisabled ? 0.5 : 1,
                 },
               ]
@@ -48,14 +51,26 @@ const AppBtn = (props: any) => {
         {isBusy ? (
           <Circle size={16} color={type === 'outline' ? color : '#FFF'} />
         ) : (
-          <Text
-            style={{
-              fontFamily: 'DMSans Regular',
-              fontWeight: '700',
-              color: type === 'outline' ? color : textColor,
-            }}>
-            {title}
-          </Text>
+          <>
+            <View style={{flexDirection: 'row'}}>
+              {icon && (
+                <FontAwesome
+                  name={icon}
+                  size={20}
+                  color={colors.primary}
+                  style={{marginRight: 5}}
+                />
+              )}
+              <Text
+                style={{
+                  fontFamily: 'DMSans Regular',
+                  fontWeight: '700',
+                  color: textColor,
+                }}>
+                {title}
+              </Text>
+            </View>
+          </>
         )}
       </Pressable>
     </>
