@@ -7,4 +7,5 @@ export default {
   loginOptionsScreen: 'login',
   tellUsMore: 'tell-us-more',
   successPage: 'success-page',
+  createPin: 'create-pin',
 };

@@ -8,7 +8,7 @@ import routes from '../routes/routes';
 const Stack = createStackNavigator();
 
 export const Main = () => {
-  const [initialRouteName] = useState(routes.welcomeScreen);
+  const [initialRouteName] = useState(routes.createPin);
 
   return (
     <>
