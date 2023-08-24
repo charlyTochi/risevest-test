@@ -1,7 +1,9 @@
 import {CreatePin} from '../../ui/app/create-pin/CreatePin';
 import {Home} from '../../ui/app/home/Home';
 import {HomeScreen} from '../../ui/app/home/HomeScreen';
-import {FundPlan} from '../../ui/app/plan/FundPlan';
+import { CreatePlan } from '../../ui/app/plan/create-plan/CreatePlan';
+import { PlanForm } from '../../ui/app/plan/create-plan/components/PlanForm';
+import {FundPlan} from '../../ui/app/plan/fund-plan/FundPlan';
 import {Login} from '../../ui/auth/sign-in/Login';
 import {SignUp} from '../../ui/auth/sign-up/SignUp';
 import {Splash} from '../../ui/auth/splash/SplashScreen';
@@ -23,7 +25,15 @@ const appRouter = [
     route: routes.fundPlan,
     component: FundPlan,
   },
+  {
+    route: routes.createPlan,
+    component: CreatePlan,
+  },
 
+  {
+    route: routes.planForm,
+    component: PlanForm,
+  },
   {
     route: routes.loginOptionsScreen,
     component: Login,

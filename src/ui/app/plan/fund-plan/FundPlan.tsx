@@ -1,9 +1,9 @@
 import React, {useRef} from 'react';
 import {View, Text, StyleSheet, FlatList, Pressable} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import colors from '../../../core/config/colors';
+import colors from '../../../../core/config/colors';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import AppBtn from '../../components/AppBtn';
+import AppBtn from '../../../components/AppBtn';
 
 export const FundPlan = () => {
   const refRBSheet = useRef<RBSheet>(null);
@@ -13,25 +13,25 @@ export const FundPlan = () => {
       key: 0,
       name: 'Plan some stuffs',
       amount: '$4,000',
-      backgroundImage: require('../../../../assets/images/welcome/quality-asset.png'), // Set your image path here
+      backgroundImage: require('../../../../../assets/images/welcome/quality-asset.png'), // Set your image path here
     },
     {
       key: 1,
       name: 'Plan a wedding',
       amount: '$4,100',
-      backgroundImage: require('../../../../assets/images/welcome/quality-asset.png'), // Set your image path here
+      backgroundImage: require('../../../../../assets/images/welcome/quality-asset.png'), // Set your image path here
     },
     {
       key: 2,
       name: 'Make Plans',
       amount: '$2,100',
-      backgroundImage: require('../../../../assets/images/welcome/quality-asset.png'), // Set your image path here
+      backgroundImage: require('../../../../../assets/images/welcome/quality-asset.png'), // Set your image path here
     },
     {
       key: 4,
       name: 'Go for it',
       amount: '$3,000',
-      backgroundImage: require('../../../../assets/images/welcome/quality-asset.png'), // Set your image path here
+      backgroundImage: require('../../../../../assets/images/welcome/quality-asset.png'), // Set your image path here
     },
   ];
 

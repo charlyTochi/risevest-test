@@ -10,4 +10,6 @@ export default {
   successPage: 'success-page',
   createPin: 'create-pin',
   fundPlan: 'fund-plan',
+  createPlan: 'create-plan',
+  planForm: 'plan-form',
 };
