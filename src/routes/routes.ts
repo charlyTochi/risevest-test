@@ -12,4 +12,6 @@ export default {
   fundPlan: 'fund-plan',
   createPlan: 'create-plan',
   planForm: 'plan-form',
+  review: 'review',
+  viewPlan: 'viewPlan',
 };

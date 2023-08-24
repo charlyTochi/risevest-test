@@ -1,8 +1,9 @@
+import {Review} from './../../ui/app/plan/create-plan/components/Review';
 import {CreatePin} from '../../ui/app/create-pin/CreatePin';
 import {Home} from '../../ui/app/home/Home';
 import {HomeScreen} from '../../ui/app/home/HomeScreen';
-import { CreatePlan } from '../../ui/app/plan/create-plan/CreatePlan';
-import { PlanForm } from '../../ui/app/plan/create-plan/components/PlanForm';
+import {CreatePlan} from '../../ui/app/plan/create-plan/CreatePlan';
+import {PlanForm} from '../../ui/app/plan/create-plan/components/PlanForm';
 import {FundPlan} from '../../ui/app/plan/fund-plan/FundPlan';
 import {Login} from '../../ui/auth/sign-in/Login';
 import {SignUp} from '../../ui/auth/sign-up/SignUp';
@@ -11,6 +12,7 @@ import {SuccessPage} from '../../ui/auth/success-page/SuccessPage';
 import {TellUsMore} from '../../ui/auth/tell-us-more/TellUsMore';
 import {WelcomeScreen} from '../../ui/welcome-screen/WelcomeScreen';
 import routes from '../routes';
+import {ViewPlan} from '../../ui/app/plan/create-plan/components/ViewPlan';
 
 const appRouter = [
   {
@@ -26,6 +28,10 @@ const appRouter = [
     component: FundPlan,
   },
   {
+    route: routes.viewPlan,
+    component: ViewPlan,
+  },
+  {
     route: routes.createPlan,
     component: CreatePlan,
   },
@@ -33,6 +39,10 @@ const appRouter = [
   {
     route: routes.planForm,
     component: PlanForm,
+  },
+  {
+    route: routes.review,
+    component: Review,
   },
   {
     route: routes.loginOptionsScreen,
