@@ -16,9 +16,7 @@ const UserRegistrationProvider: React.FC<{children: ReactNode}> = ({
   const [regFormData, setRegFormData] = useState<any>({});
   const [user, setUser] = useState<any>({});
 
-  useEffect(() => {
-    console.log('user', user);
-  }, [user]);
+  useEffect(() => {}, [user]);
 
   const contextValue: UserRegistrationContextType = {
     regFormData,

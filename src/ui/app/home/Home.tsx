@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -6,9 +6,12 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {StyleSheet, View} from 'react-native';
 import colors from '../../../core/config/colors';
 import {HomeScreen} from './HomeScreen';
+import {UserAccountContext} from '../../../core/context/UserAcccountContext';
 const Tab = createBottomTabNavigator();
 
 export const Home = () => {
+  const {logout} = useContext(UserAccountContext) ?? {};
+
   return (
     <>
       <Tab.Navigator
@@ -84,11 +87,12 @@ export const Home = () => {
           }}
         />
         <Tab.Screen
-          name="Settings"
+          name="Account"
           component={HomeScreen}
           options={{
             tabBarIcon: ({focused}) => (
               <Ionicons
+                onPress={() => logout()}
                 name="md-settings"
                 color={focused ? colors.primary : colors.white}
                 size={25}

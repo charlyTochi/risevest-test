@@ -106,13 +106,14 @@ export const TellUsMoreForm = (props: any) => {
       createEntryNoHeader('users', payload, (res: any, err: any) => {
         if (!err) {
           navigation.navigate(routes.successPage, {
+            user: res,
             title: 'You just created your Rise account',
             description: 'Welcome to Rise, let`s take you home',
           });
           setIsBusy(false);
         } else {
           setIsBusy(false);
-          showToastUtil(ResponseType.error, err);
+          showToastUtil(ResponseType.error, 'An Error Occured');
         }
       });
     } catch (error: any) {

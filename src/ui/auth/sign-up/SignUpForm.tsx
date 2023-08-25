@@ -31,7 +31,6 @@ export const SignUpForm = (props: any) => {
   };
 
   useEffect(() => {
-    console.log('regFormData', regFormData);
   }, [regFormData]);
 
   const validate = formValues => {

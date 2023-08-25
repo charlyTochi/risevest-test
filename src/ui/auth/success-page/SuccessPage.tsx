@@ -2,8 +2,9 @@ import React from 'react';
 import {Image, Text, View, StyleSheet} from 'react-native';
 import colors from '../../../core/config/colors';
 import AppBtn from '../../components/AppBtn';
+import routes from '../../../routes/routes';
 
-export const SuccessPage = ({route}) => {
+export const SuccessPage = ({route, navigation}) => {
   const {title, description} = route.params;
 
   return (
@@ -18,7 +19,7 @@ export const SuccessPage = ({route}) => {
         <AppBtn
           title="Okay"
           moreButtonStyles={{width: 350}}
-          onPress={() => console.log('hiii')}
+          onPress={() => navigation.navigate(routes.loginOptionsScreen)}
         />
       </View>
     </View>

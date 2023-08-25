@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {Formik} from 'formik';
 import colors from '../../../core/config/colors';
@@ -8,11 +8,17 @@ import {ResponseType} from '../../../core/enums/response-type.enum';
 import Input from '../../components/AppInput';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {createEntryNoHeader} from '../../../core/services/dataGenerator';
+import {UserAccountContext} from '../../../core/context/UserAcccountContext';
 
 export const LoginForm = (props: any) => {
   const {navigation} = props;
   const [showPassword, setShowPassword] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
+  const {
+    setUsers = () => {},
+    setLoginUserToken,
+    setToken,
+  } = useContext(UserAccountContext) ?? {};
 
   const handleSubmit = async (data: any) => {
     try {
@@ -24,14 +30,13 @@ export const LoginForm = (props: any) => {
         (res: any, err: any) => {
           if (!err) {
             const response = res;
-            console.log('response', response);
-            showToastUtil(ResponseType.success, 'Good to go');
-
+            setUsers(response.data);
+            setToken(response.data.token);
+            setLoginUserToken(response.data.token);
             setIsBusy(false);
           } else {
             setIsBusy(false);
             showToastUtil(ResponseType.error, 'Incorrect username or password');
-            console.log('fsafdsa', err);
           }
         },
       );
