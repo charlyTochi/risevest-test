@@ -1,34 +1,36 @@
-import React, {useState} from 'react';
-import {Button, View} from 'react-native';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import React from 'react';
+import DatePicker from 'react-native-date-picker';
 
-const ModalSelect = () => {
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+interface ModalSelectProps {
+  date: Date;
+  onDateChange: (date: Date) => void;
+  open: boolean;
+  onClose: () => void;
+  yearOnly?: boolean; // Prop to control whether to show only the year
+}
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
-
-  const handleConfirm = date => {
-    console.warn('A date has been picked: ', date);
-    hideDatePicker();
-  };
-
+export const ModalSelect: React.FC<ModalSelectProps> = ({
+  date,
+  onDateChange,
+  open,
+  onClose,
+  yearOnly,
+}) => {
   return (
-    <View>
-      <Button title="Show Date Picker" onPress={showDatePicker} />
-      <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        mode="date"
-        onConfirm={handleConfirm}
-        onCancel={hideDatePicker}
+    <>
+      <DatePicker
+        modal
+        open={open}
+        date={date}
+        mode={yearOnly ? 'year' : 'date'}
+        onConfirm={newDate => {
+          onClose();
+          onDateChange(newDate);
+        }}
+        onCancel={() => {
+          onClose();
+        }}
       />
-    </View>
+    </>
   );
 };
-
-export default ModalSelect;

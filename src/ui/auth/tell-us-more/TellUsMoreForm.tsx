@@ -8,18 +8,87 @@ import {ResponseType} from '../../../core/enums/response-type.enum';
 import Input from '../../components/AppInput';
 import PhoneCodeDropdown from '../../components/PhoneCodeDropdown';
 import {Countries} from '../../../core/constants/countries';
-import ModalSelect from '../../components/ModalSelect';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {UserRegistrationContext} from '../../../core/context/UserRegistrationContext';
 import {createEntryNoHeader} from '../../../core/services/dataGenerator';
+import {ModalSelect} from '../../components/ModalSelect';
+import moment from 'moment';
+import routes from '../../../routes/routes';
 
 export const TellUsMoreForm = (props: any) => {
   const {navigation} = props;
   const [isBusy, setIsBusy] = useState(false);
+  const [userDate, setUserDate] = useState(false);
+  const [isDateSelected, setIsDateSelected] = useState(false);
   const [dialCode, setDialCode] = useState<any>();
+  const [DOB, setDOB] = useState<any>('');
   const [selectedLocation, setSelectedLocation] = useState<any>();
   const {regFormData = {}} = useContext(UserRegistrationContext);
   const [locations] = useState(Countries);
+
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [isDatePickerOpen, setDatePickerOpen] = useState(false);
+
+  const handleDateChange = (
+    date: string | number | React.SetStateAction<Date>,
+  ) => {
+    setSelectedDate(date);
+    const parsedDate = new Date(date);
+    console.log(parsedDate);
+
+    // Input date string
+    var inputDateString = parsedDate;
+
+    // Create a Date object from the input string
+    var inputDate = new Date(inputDateString);
+
+    // Extract year, month, and day components
+    var year = inputDate.getUTCFullYear();
+    var month = (inputDate.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are zero-based, so add 1
+    var day = inputDate.getUTCDate().toString().padStart(2, '0');
+
+    // Create the formatted date string
+    var formattedDate = month + '-' + day + '-' + year;
+
+    console.log(formattedDate);
+
+    setDOB(formattedDate);
+    setIsDateSelected(true);
+
+    const dobString = parsedDate;
+
+    const dob = new Date(dobString);
+
+    // Calculate the current date
+    const currentDate = new Date();
+
+    // Calculate the difference in years between the current date and the date of birth
+    let age = currentDate.getFullYear() - dob.getFullYear();
+
+    // Adjust age based on the months and days
+    if (
+      currentDate.getMonth() < dob.getMonth() ||
+      (currentDate.getMonth() === dob.getMonth() &&
+        currentDate.getDate() < dob.getDate())
+    ) {
+      age--;
+    }
+
+    // Check if the calculated age is 18 or above
+    if (age >= 18) {
+      setUserDate(true);
+    } else {
+      setUserDate(false);
+    }
+  };
+
+  const openDatePicker = () => {
+    setDatePickerOpen(true);
+  };
+
+  const closeDatePicker = () => {
+    setDatePickerOpen(false);
+  };
 
   const handleSubmit = async (data: any) => {
     try {
@@ -30,21 +99,20 @@ export const TellUsMoreForm = (props: any) => {
         last_name: data.lastName,
         email_address: regFormData.email,
         password: regFormData.password,
-        date_of_birth: '02-03-1992',
+        date_of_birth: DOB,
         phone_number: selectedLocation.diallingCode + data.phoneNumber,
       };
 
       createEntryNoHeader('users', payload, (res: any, err: any) => {
         if (!err) {
-          const response = res;
-          console.log('response', response);
-          showToastUtil(ResponseType.success, 'Good to go');
-
+          navigation.navigate(routes.successPage, {
+            title: 'You just created your Rise account',
+            description: 'Welcome to Rise, let`s take you home',
+          });
           setIsBusy(false);
         } else {
           setIsBusy(false);
           showToastUtil(ResponseType.error, err);
-          console.log('fsafdsa', err);
         }
       });
     } catch (error: any) {
@@ -63,6 +131,9 @@ export const TellUsMoreForm = (props: any) => {
     if (!formValues.lastName) {
       errors['lastName'] = 'Legal last name is a requred field';
     }
+    if (!userDate) {
+      errors['dob'] = 'You must be at least 18 years old';
+    }
     return errors;
   };
 
@@ -76,6 +147,7 @@ export const TellUsMoreForm = (props: any) => {
           lastName: '',
           nickName: '',
           phoneNumber: '',
+          dob: '',
         }}
         onSubmit={values => {
           handleSubmit(values);
@@ -141,17 +213,19 @@ export const TellUsMoreForm = (props: any) => {
             <Input
               textInputProps={{
                 placeholder: 'Date of Birth',
-                onChangeText: formikprops.handleChange('nick-name'),
-                value: formikprops.values.nickName,
+                value: isDateSelected
+                  ? moment(selectedDate).format('MMMM Do YYYY')
+                  : '',
               }}
-              isError={formikprops.errors.nickName ? true : false}
-              error={formikprops.errors.nickName}
-              isVisible={formikprops.values.nickName.length > 0}
+              isError={formikprops.errors.dob ? true : false}
+              error={formikprops.errors.dob}
+              isVisible={true}
               suffixIcon={
                 <FontAwesome
                   name={'calendar'}
                   size={20}
                   color={colors.primary}
+                  onPress={() => openDatePicker()}
                 />
               }
             />
@@ -161,11 +235,19 @@ export const TellUsMoreForm = (props: any) => {
                 title="Continue"
                 onPress={formikprops.handleSubmit}
                 isBusy={isBusy}
+                isDisabled={isBusy}
               />
             </View>
           </View>
         )}
       </Formik>
+
+      <ModalSelect
+        date={selectedDate}
+        onDateChange={handleDateChange}
+        open={isDatePickerOpen}
+        onClose={closeDatePicker}
+      />
     </>
   );
 };

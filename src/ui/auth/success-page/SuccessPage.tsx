@@ -3,8 +3,9 @@ import {Image, Text, View, StyleSheet} from 'react-native';
 import colors from '../../../core/config/colors';
 import AppBtn from '../../components/AppBtn';
 
-export const SuccessPage = (props: {title: any; description: any}) => {
-  const {title, description} = props;
+export const SuccessPage = ({route}) => {
+  const {title, description} = route.params;
+
   return (
     <View style={styles.container}>
       <Image
