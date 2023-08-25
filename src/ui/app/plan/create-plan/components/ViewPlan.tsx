@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+  FlatList,
   Image,
   Platform,
   ScrollView,
@@ -10,8 +11,41 @@ import {
 } from 'react-native';
 import colors from '../../../../../core/config/colors';
 import AppBtn from '../../../../components/AppBtn';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export const ViewPlan = () => {
+  const datas = [
+    {
+      id: 1,
+      date: 'July 2020',
+      description: 'Received from Bank Account (BOSUN TONY ADEMOSU)',
+      amount: '+$3,200',
+      image: require('../../../../../../assets/images/plan/success-tr.png'),
+    },
+    {
+      id: 2,
+      date: 'April 2021',
+      description: 'Sent to Bank Account (ADEBAYO MUSILIU JAGUN)',
+      amount: '+$9,200',
+      image: require('../../../../../../assets/images/plan/failure-tr.png'),
+    },
+  ];
+
+  const renderItem = ({item}) => (
+    <View style={styles.itemContainers}>
+      <View style={styles.iconContainers}>
+        <Image source={item.image} />
+      </View>
+      <View style={styles.textContainer}>
+        <Text style={styles.itemText}>{item.description}</Text>
+        <Text style={styles.additionalText}>{item.date}</Text>
+      </View>
+      <View style={styles.iconContainers}>
+        <Text style={styles.amount}>{item.amount}</Text>
+      </View>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.headerDiv}>
@@ -75,6 +109,14 @@ export const ViewPlan = () => {
           source={require('../../../../../../assets/images/plan/plan-details.png')}
           style={{alignSelf: 'center'}}
         />
+
+        <View style={{marginTop: 30, marginBottom: 60}}>
+          <FlatList
+            data={datas}
+            renderItem={renderItem}
+            keyExtractor={item => item.id.toString()}
+          />
+        </View>
       </ScrollView>
     </View>
   );
@@ -155,5 +197,39 @@ const styles = StyleSheet.create({
     color: colors.green,
     textAlign: 'center',
     marginTop: 20,
+  },
+
+  textContainer: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  additionalText: {
+    fontSize: 14,
+    color: 'gray',
+  },
+
+  itemContainers: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  iconContainers: {
+    marginRight: 10,
+  },
+  itemText: {
+    flex: 1,
+    fontSize: 16,
+    width: 200,
+    fontFamily: 'DMSans Regular',
+    color: colors.black,
+    marginTop: 20,
+  },
+  amount: {
+    fontSize: 15,
+    fontFamily: 'Hanken Grotesk Regular',
+    color: colors.black,
+    marginTop: 10,
   },
 });
