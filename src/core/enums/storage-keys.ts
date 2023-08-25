@@ -1,0 +1,4 @@
+export const STORAGE_KEYS = {
+  TOKEN: 'TOKEN',
+  NOT_FIRST_OPEN: 'WRKMAN_NOT_FIRST_OPEN',
+};

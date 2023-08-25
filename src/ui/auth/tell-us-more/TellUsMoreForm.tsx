@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {Formik} from 'formik';
 import colors from '../../../core/config/colors';
@@ -10,19 +10,43 @@ import PhoneCodeDropdown from '../../components/PhoneCodeDropdown';
 import {Countries} from '../../../core/constants/countries';
 import ModalSelect from '../../components/ModalSelect';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {UserRegistrationContext} from '../../../core/context/UserRegistrationContext';
+import {createEntryNoHeader} from '../../../core/services/dataGenerator';
 
 export const TellUsMoreForm = (props: any) => {
   const {navigation} = props;
-  const [showPassword, setShowPassword] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
   const [dialCode, setDialCode] = useState<any>();
   const [selectedLocation, setSelectedLocation] = useState<any>();
-
+  const {regFormData = {}} = useContext(UserRegistrationContext);
   const [locations] = useState(Countries);
-  const handleSubmit = async (data: any) => {
-    setIsBusy(true);
 
+  const handleSubmit = async (data: any) => {
     try {
+      setIsBusy(true);
+
+      const payload = {
+        first_name: data.firstName,
+        last_name: data.lastName,
+        email_address: regFormData.email,
+        password: regFormData.password,
+        date_of_birth: '02-03-1992',
+        phone_number: selectedLocation.diallingCode + data.phoneNumber,
+      };
+
+      createEntryNoHeader('users', payload, (res: any, err: any) => {
+        if (!err) {
+          const response = res;
+          console.log('response', response);
+          showToastUtil(ResponseType.success, 'Good to go');
+
+          setIsBusy(false);
+        } else {
+          setIsBusy(false);
+          showToastUtil(ResponseType.error, err);
+          console.log('fsafdsa', err);
+        }
+      });
     } catch (error: any) {
       showToastUtil(ResponseType.error);
       setIsBusy(false);
@@ -33,6 +57,12 @@ export const TellUsMoreForm = (props: any) => {
 
   const validate = formValues => {
     const errors = {};
+    if (!formValues.firstName) {
+      errors['firstName'] = 'Legal first name is a requred field';
+    }
+    if (!formValues.lastName) {
+      errors['lastName'] = 'Legal last name is a requred field';
+    }
     return errors;
   };
 
@@ -55,7 +85,7 @@ export const TellUsMoreForm = (props: any) => {
             <Input
               textInputProps={{
                 placeholder: 'Legal First Name',
-                onChangeText: formikprops.handleChange('first-name'),
+                onChangeText: formikprops.handleChange('firstName'),
                 value: formikprops.values.firstName,
               }}
               isError={formikprops.errors.firstName ? true : false}
@@ -65,7 +95,7 @@ export const TellUsMoreForm = (props: any) => {
             <Input
               textInputProps={{
                 placeholder: 'Legal Last Name',
-                onChangeText: formikprops.handleChange('last-name'),
+                onChangeText: formikprops.handleChange('lastName'),
                 value: formikprops.values.lastName,
               }}
               isError={formikprops.errors.lastName ? true : false}
@@ -76,7 +106,7 @@ export const TellUsMoreForm = (props: any) => {
             <Input
               textInputProps={{
                 placeholder: 'Nick name',
-                onChangeText: formikprops.handleChange('nick-name'),
+                onChangeText: formikprops.handleChange('nickName'),
                 value: formikprops.values.nickName,
               }}
               isError={formikprops.errors.nickName ? true : false}
@@ -109,7 +139,6 @@ export const TellUsMoreForm = (props: any) => {
             />
 
             <Input
-              prefix={<ModalSelect />}
               textInputProps={{
                 placeholder: 'Date of Birth',
                 onChangeText: formikprops.handleChange('nick-name'),
@@ -132,12 +161,6 @@ export const TellUsMoreForm = (props: any) => {
                 title="Continue"
                 onPress={formikprops.handleSubmit}
                 isBusy={isBusy}
-                isDisabled={
-                  !formikprops.values.firstName ||
-                  !formikprops.values.lastName ||
-                  !formikprops.values.nickName ||
-                  isBusy
-                }
               />
             </View>
           </View>

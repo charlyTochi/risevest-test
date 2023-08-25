@@ -7,6 +7,7 @@ import showToastUtil from '../../../core/utils/show-toast.util';
 import {ResponseType} from '../../../core/enums/response-type.enum';
 import Input from '../../components/AppInput';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {createEntryNoHeader} from '../../../core/services/dataGenerator';
 
 export const LoginForm = (props: any) => {
   const {navigation} = props;
@@ -14,9 +15,26 @@ export const LoginForm = (props: any) => {
   const [isBusy, setIsBusy] = useState(false);
 
   const handleSubmit = async (data: any) => {
-    setIsBusy(true);
-
     try {
+      setIsBusy(true);
+
+      createEntryNoHeader(
+        'sessions',
+        {email_address: data.email, password: data.password},
+        (res: any, err: any) => {
+          if (!err) {
+            const response = res;
+            console.log('response', response);
+            showToastUtil(ResponseType.success, 'Good to go');
+
+            setIsBusy(false);
+          } else {
+            setIsBusy(false);
+            showToastUtil(ResponseType.error, 'Incorrect username or password');
+            console.log('fsafdsa', err);
+          }
+        },
+      );
     } catch (error: any) {
       showToastUtil(ResponseType.error);
       setIsBusy(false);
@@ -33,9 +51,6 @@ export const LoginForm = (props: any) => {
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formValues.email)
     ) {
       errors['email'] = 'Invalid email address';
-    }
-    if (!formValues.password || formValues.password.length < 8) {
-      errors['password'] = 'Password does not meet criteria.';
     }
 
     return errors;
@@ -118,7 +133,7 @@ const styles = StyleSheet.create({
     color: colors.primary,
     textAlign: 'center',
     fontFamily: 'DMSans Regular',
-    fontWeight: '400',
+    fontWeight: '700',
     fontSize: 15,
   },
   instructionMainView: {

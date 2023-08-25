@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Formik} from 'formik';
 import colors from '../../../core/config/colors';
@@ -8,15 +8,20 @@ import {ResponseType} from '../../../core/enums/response-type.enum';
 import Input from '../../components/AppInput';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import routes from '../../../routes/routes';
+import {UserRegistrationContext} from '../../../core/context/UserRegistrationContext';
 
 export const SignUpForm = (props: any) => {
   const {navigation} = props;
   const [showPassword, setShowPassword] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
+  const {regFormData = {}, setRegFormData} = useContext(
+    UserRegistrationContext,
+  );
 
   const handleSubmit = async (data: any) => {
-    navigation.navigate(routes.tellUsMore);
     try {
+      setRegFormData(data); //here we persist out data in context
+      navigation.navigate(routes.tellUsMore);
     } catch (error: any) {
       showToastUtil(ResponseType.error);
       setIsBusy(false);
@@ -24,6 +29,10 @@ export const SignUpForm = (props: any) => {
     }
     setIsBusy(false);
   };
+
+  useEffect(() => {
+    console.log('regFormData', regFormData);
+  }, [regFormData]);
 
   const validate = formValues => {
     const errors = {};
