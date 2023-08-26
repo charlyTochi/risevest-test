@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Text,
   View,
@@ -8,29 +8,32 @@ import {
   StatusBar,
   Image,
   ImageBackground,
+  Pressable,
 } from 'react-native';
 import colors from '../../../core/config/colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AppBtn from '../../components/AppBtn';
 import {PlanList} from './components/Plan/PlanList';
 import {getEntry} from '../../../core/services/dataGenerator';
+import routes from '../../../routes/routes';
+import {useIsFocused} from '@react-navigation/native';
+import {UserAccountContext} from '../../../core/context/UserAcccountContext';
 
-export const HomeScreen = (props) => {
+export const HomeScreen = props => {
   const {navigation} = props;
   const [showPassword, setShowPassword] = useState(false);
   const [allPlans, setAllPlans] = useState([]);
-
+  const isFocused = useIsFocused();
+  const {users} = useContext(UserAccountContext) ?? {};
   useEffect(() => {
     getAllPlans();
-  }, []);
+  }, [isFocused]);
 
   const getAllPlans = () => {
     try {
       getEntry('plans', (res: any, err: any) => {
         if (!err) {
           const response = res;
-          console.log('response', response.data);
-          
           setAllPlans(response.data.items);
         }
       });
@@ -59,7 +62,7 @@ export const HomeScreen = (props) => {
                 style={styles.sunIcon}
               />
             </View>
-            <Text style={styles.userName}>Deborah</Text>
+            <Text style={styles.userName}>{users?.first_name}</Text>
           </View>
           <View style={styles.bonusContainer}>
             <Text style={styles.bonusText}>Earn 3% bonus</Text>
@@ -113,8 +116,22 @@ export const HomeScreen = (props) => {
 
         <View style={styles.planContainer}>
           <View style={styles.planHeader}>
-            <Text style={styles.planHeaderText}>Create Plan</Text>
-            <Text style={styles.viewAllText}>View all plans</Text>
+            <Text style={styles.planHeaderText}>
+              {allPlans?.length > 0 ? 'Your plans' : 'Create plan'}
+            </Text>
+            <Pressable
+              disabled={allPlans?.length === 0 ? true : false}
+              onPress={() => navigation.navigate(routes.chooseFromPlans)}>
+              <Text
+                style={[
+                  styles.viewAllText,
+                  allPlans?.length > 0
+                    ? {color: colors.black}
+                    : {color: colors.grey},
+                ]}>
+                View all plans
+              </Text>
+            </Pressable>
           </View>
           <Text style={styles.planDescription}>
             Start your investment journey by creating a plan
@@ -192,19 +209,21 @@ const styles = StyleSheet.create({
     fontFamily: 'DMSans Regular',
     color: colors.black,
     fontWeight: '400',
+    textTransform: 'capitalize',
   },
   bonusContainer: {
     flexDirection: 'column',
     marginLeft: 40,
+    marginTop: 5,
+    height: 25,
+    padding: 5,
     backgroundColor: colors.primary,
-    padding: 10,
     borderRadius: 50,
   },
   bonusText: {
     color: colors.white,
     fontSize: 12,
     fontWeight: '400',
-    padding: 5,
     fontFamily: 'DMSans Regular',
   },
   bellContainer: {

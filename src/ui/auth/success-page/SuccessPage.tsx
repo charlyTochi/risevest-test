@@ -5,7 +5,7 @@ import AppBtn from '../../components/AppBtn';
 import routes from '../../../routes/routes';
 
 export const SuccessPage = ({route, navigation}) => {
-  const {title, description} = route.params;
+  const {title, description, screen} = route.params;
 
   return (
     <View style={styles.container}>
@@ -19,7 +19,11 @@ export const SuccessPage = ({route, navigation}) => {
         <AppBtn
           title="Okay"
           moreButtonStyles={{width: 350}}
-          onPress={() => navigation.navigate(routes.loginOptionsScreen)}
+          onPress={() => {
+            screen === 'auth'
+              ? navigation.navigate(routes.loginOptionsScreen)
+              : navigation.navigate(routes.home);
+          }}
         />
       </View>
     </View>
@@ -52,6 +56,7 @@ const styles = StyleSheet.create({
     color: colors.darkGrey,
     fontWeight: '400',
     marginTop: 10,
+    textTransform: 'capitalize',
   },
   footer: {
     position: 'absolute',

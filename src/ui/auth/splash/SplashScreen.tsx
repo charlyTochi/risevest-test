@@ -1,8 +1,18 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Image, Text, View, StyleSheet} from 'react-native';
 import colors from '../../../core/config/colors';
+import {UserAccountContext} from '../../../core/context/UserAcccountContext';
+import routes from '../../../routes/routes';
 
-export const Splash = () => {
+export const Splash = props => {
+  const {navigation} = props;
+
+  const {loginUserToken} = useContext(UserAccountContext);
+
+  useEffect(() => {
+    navigation.navigate(loginUserToken ? routes.home : routes.welcomeScreen);
+  }, []);
+
   return (
     <View style={styles.container}>
       <Image

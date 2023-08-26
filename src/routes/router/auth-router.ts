@@ -8,6 +8,10 @@ import routes from '../routes';
 
 const authRouter = [
   {
+    route: routes.splashScreen,
+    component: Splash,
+  },
+  {
     route: routes.loginOptionsScreen,
     component: Login,
   },
@@ -30,10 +34,7 @@ const authRouter = [
     component: TellUsMore,
   },
 
-  {
-    route: routes.splashScreen,
-    component: Splash,
-  },
+ 
 ];
 
 export default authRouter;

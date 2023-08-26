@@ -13,7 +13,7 @@ export const Main = () => {
   const {loginUserToken} = useContext(UserAccountContext);
 
   const [initialRouteName] = useState(
-    loginUserToken ? routes.home : routes.loginOptionsScreen,
+    loginUserToken ? routes.home : routes.splashScreen,
   );
 
   return (

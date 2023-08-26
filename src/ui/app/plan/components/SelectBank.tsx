@@ -2,8 +2,11 @@ import React from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import colors from '../../../../core/config/colors';
+import routes from '../../../../routes/routes';
 
-export const SelectBank = () => {
+export const SelectBank = props => {
+  const {navigation} = props;
+
   const data = [
     {
       key: 0,
@@ -52,7 +55,7 @@ export const SelectBank = () => {
               size={20}
               color={colors.primary}
               style={styles.backIcon}
-              onPress={() => console.log('nice')}
+              onPress={() => navigation.navigate(routes.fundPlan)}
             />
             <Text style={styles.headerText}>Select Bank</Text>
           </View>

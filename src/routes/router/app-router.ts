@@ -6,11 +6,17 @@ import {CreatePlan} from '../../ui/app/plan/create-plan/CreatePlan';
 import {PlanForm} from '../../ui/app/plan/create-plan/components/PlanForm';
 import {FundPlan} from '../../ui/app/plan/fund-plan/FundPlan';
 import {SuccessPage} from '../../ui/auth/success-page/SuccessPage';
-import {TellUsMore} from '../../ui/auth/tell-us-more/TellUsMore';
 import routes from '../routes';
 import {ViewPlan} from '../../ui/app/plan/create-plan/components/ViewPlan';
+import {ChooseFromPlans} from '../../ui/app/plan/components/ChooseFromPlans';
+import {SelectBank} from '../../ui/app/plan/components/SelectBank';
+import {Splash} from '../../ui/auth/splash/SplashScreen';
 
 const appRouter = [
+  {
+    route: routes.splashScreen,
+    component: Splash,
+  },
   {
     route: routes.home,
     component: Home,
@@ -35,6 +41,14 @@ const appRouter = [
   {
     route: routes.planForm,
     component: PlanForm,
+  },
+  {
+    route: routes.selectBank,
+    component: SelectBank,
+  },
+  {
+    route: routes.chooseFromPlans,
+    component: ChooseFromPlans,
   },
   {
     route: routes.review,

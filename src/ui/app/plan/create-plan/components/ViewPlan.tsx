@@ -12,8 +12,12 @@ import {
 import colors from '../../../../../core/config/colors';
 import AppBtn from '../../../../components/AppBtn';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import moment from 'moment';
+import routes from '../../../../../routes/routes';
 
-export const ViewPlan = () => {
+export const ViewPlan = ({route, navigation}) => {
+  const {plan} = route.params;
+
   const datas = [
     {
       id: 1,
@@ -46,6 +50,8 @@ export const ViewPlan = () => {
     </View>
   );
 
+  console.log('plannnn', plan);
+
   return (
     <View style={styles.container}>
       <View style={styles.headerDiv}>
@@ -60,39 +66,44 @@ export const ViewPlan = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollView}>
         <View style={{marginBottom: 50}}>
-          <Text style={styles.centeredText}>Plan Balance</Text>
-          <Text style={styles.totalBalanceAmount}>$0.00</Text>
+          <Text style={styles.centeredText}>{plan?.plan_name}</Text>
+          <Text
+            style={styles.totalBalanceAmount}>{`₦ ${plan.target_amount}`}</Text>
           <Text style={styles.centeredText}>~ ₦ 0.00</Text>
           <Text style={styles.gains}>Gains</Text>
           <Text style={styles.percentage}>+$5,000.43 • +12.4% </Text>
 
           <View style={styles.rowContainer}>
             <Text style={styles.estimatedTxt}>Total earnings</Text>
-            <Text style={styles.dateTxt}>$500,000</Text>
+            <Text style={styles.dateTxt}>{`₦ ${plan.total_returns}`}</Text>
           </View>
 
           <View style={styles.rowContainer}>
             <Text style={styles.estimatedTxt}>Current earnings</Text>
-            <Text style={styles.dateTxt}>$120,000</Text>
+            <Text style={styles.dateTxt}>0</Text>
           </View>
           <View style={styles.rowContainer}>
             <Text style={styles.estimatedTxt}>Deposit value</Text>
-            <Text style={styles.dateTxt}>$100,000</Text>
+            <Text style={styles.dateTxt}>0</Text>
           </View>
 
           <View style={styles.rowContainer}>
             <Text style={styles.estimatedTxt}>Balance in Naira (* 505)</Text>
-            <Text style={styles.dateTxt}>$190,000</Text>
+            <Text style={styles.dateTxt}>0</Text>
           </View>
 
           <View style={styles.rowContainer}>
             <Text style={styles.estimatedTxt}>Plan created on </Text>
-            <Text style={styles.dateTxt}>$400,000</Text>
+            <Text style={styles.dateTxt}>
+              {moment(plan.created_at).format('MMMM Do YYYY')}
+            </Text>
           </View>
 
           <View style={styles.rowContainer}>
             <Text style={styles.estimatedTxt}>Maturity date</Text>
-            <Text style={styles.dateTxt}>$300,000</Text>
+            <Text style={styles.dateTxt}>
+              {moment(plan.maturity_date).format('MMMM Do YYYY')}
+            </Text>
           </View>
         </View>
 
@@ -102,7 +113,7 @@ export const ViewPlan = () => {
           icon={'plus'}
           textColor={colors.primary}
           title="Fund plan"
-          onPress={() => console.log('bire')}
+          onPress={() => navigation.navigate(routes.fundPlan)}
         />
 
         <Image

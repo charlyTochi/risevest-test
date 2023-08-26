@@ -30,8 +30,7 @@ export const SignUpForm = (props: any) => {
     setIsBusy(false);
   };
 
-  useEffect(() => {
-  }, [regFormData]);
+  useEffect(() => {}, [regFormData]);
 
   const validate = formValues => {
     const errors = {};
@@ -42,8 +41,15 @@ export const SignUpForm = (props: any) => {
     ) {
       errors['email'] = 'Invalid email address';
     }
-    if (!formValues.password || formValues.password.length < 8) {
-      errors['password'] = 'Password does not meet criteria.';
+    if (formValues.password.length < 8) {
+      errors['password'] = 'Password length must be more than eight';
+    } else if (
+      !/^(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~])(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/.test(
+        formValues.password,
+      )
+    ) {
+      errors['password'] =
+        'Password must contain at least one special character, one uppercase letter, one lowercase letter, one digit, and be at least 8 characters long.';
     }
 
     return errors;

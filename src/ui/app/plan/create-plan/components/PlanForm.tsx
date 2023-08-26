@@ -20,7 +20,6 @@ export const PlanForm = props => {
   const [isValidDate, setIsValidDate] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isDatePickerOpen, setDatePickerOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
   const handleNextStep = () => {
     if (currentStep < 3) {
@@ -41,25 +40,12 @@ export const PlanForm = props => {
       if (!isValidDate) {
         throw new Error('Error');
       }
-      setIsBusy(true);
-      console.log(selectedDate);
-
       const payload = {
         plan_name: values.investment,
         target_amount: values.amount,
         maturity_date: selectedDate,
       };
-
-      createEntry('plans', payload, (res: any, err: any) => {
-        if (!err) {
-          const response = res;
-          setIsBusy(false);
-          console.log('good', response);
-        } else {
-          setIsBusy(false);
-          console.log('error', err);
-        }
-      });
+      navigation.navigate(routes.review, {payload: payload});
     } catch (error) {
       setIsBusy(false);
     }
@@ -83,10 +69,8 @@ export const PlanForm = props => {
 
     if (selectedMaturityDate >= oneYearAhead) {
       setIsValidDate(true);
-      console.log('Selected maturity date is at least one year ahead.');
     } else {
       setIsValidDate(false);
-      console.log('Selected maturity date is not one year ahead.');
     }
 
     const originalDate = new Date(date);

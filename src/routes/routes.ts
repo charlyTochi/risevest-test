@@ -1,3 +1,4 @@
+import { ChooseFromPlans } from './../ui/app/plan/components/ChooseFromPlans';
 export default {
   signUpScreen: 'sign-up',
   OtpScreen: 'enter-otp',
@@ -14,4 +15,6 @@ export default {
   planForm: 'plan-form',
   review: 'review',
   viewPlan: 'viewPlan',
+  chooseFromPlans: 'choose-from-plans',
+  selectBank: 'select-bank',
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Image,
   Platform,
@@ -10,8 +10,33 @@ import {
 } from 'react-native';
 import colors from '../../../../../core/config/colors';
 import AppBtn from '../../../../components/AppBtn';
+import {createEntry} from '../../../../../core/services/dataGenerator';
+import moment from 'moment';
+import routes from '../../../../../routes/routes';
+import {UserAccountContext} from '../../../../../core/context/UserAcccountContext';
 
-export const Review = () => {
+export const Review = ({route, navigation}) => {
+  const {payload} = route.params;
+  const [isBusy, setIsBusy] = useState(false);
+  const {users = () => {}} = useContext(UserAccountContext) ?? {};
+
+  const createPlan = () => {
+    try {
+      setIsBusy(true);
+      createEntry('plans', payload, (res: any, err: any) => {
+        if (!err) {
+          navigation.navigate(routes.successPage, {
+            screen: 'app',
+            title: 'You just created your plan.',
+            description: `Well done, ${users.first_name} `,
+          });
+        }
+      });
+    } catch (error) {
+      setIsBusy(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.headerDiv}>
@@ -25,16 +50,20 @@ export const Review = () => {
         keyboardShouldPersistTaps={'handled'}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollView}>
-        <Text style={styles.centeredText}>Kate Ventures</Text>
-        <Text style={styles.totalBalanceAmount}>$10,930.75</Text>
-        <Text style={styles.dateTxt}>By June 2020</Text>
+        <Text style={styles.centeredText}>{payload.plan_name}</Text>
+        <Text style={styles.totalBalanceAmount}>
+          ₦{payload.target_amount.toLocaleString()}
+        </Text>
+        <Text style={styles.dateTxt}>{`By ${moment(
+          payload.maturity_date,
+        ).format('MMMM  YYYY')}`}</Text>
         <Image
           source={require('../../../../../../assets/images/plan/graph.png')}
           style={styles.fullWidthImage}
         />
         <View style={styles.rowContainer}>
           <Text style={styles.estimatedTxt}>Estimated monthly investment</Text>
-          <Text style={styles.dateTxt}>$120</Text>
+          <Text style={styles.estTxt}>${payload.target_amount}</Text>
         </View>
         <View style={styles.itemContainers}>
           <Image
@@ -56,13 +85,15 @@ export const Review = () => {
         <AppBtn
           moreButtonStyles={[styles.button, {marginTop: 50}]}
           title="Agree & Continue"
-          onPress={() => console.log('bire')}
+          onPress={() => createPlan()}
+          disabled={isBusy}
         />
         <AppBtn
           moreButtonStyles={[styles.button]}
           color={colors.offWhite}
+          textColor={colors.primary}
           title="Start over"
-          onPress={() => console.log('bire')}
+          onPress={() => navigation.navigate(routes.createPlan)}
         />
       </ScrollView>
     </View>
@@ -82,7 +113,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     marginTop: 30,
-    marginBottom: 30,
   },
   headerImage: {
     marginLeft: 20,
@@ -99,6 +129,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'center',
     fontFamily: 'DMSans Regular',
+    textTransform: 'capitalize',
+    marginTop: 20,
   },
   totalBalanceAmount: {
     fontSize: 32,
@@ -113,6 +145,13 @@ const styles = StyleSheet.create({
     color: colors.black,
     textAlign: 'center',
     marginTop: 10,
+  },
+  estTxt: {
+    fontSize: 15,
+    fontFamily: 'Hanken Grotesk Regular',
+    color: colors.black,
+    textAlign: 'center',
+    marginTop: 30,
   },
   fullWidthImage: {
     width: '100%',

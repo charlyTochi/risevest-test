@@ -107,6 +107,7 @@ export const TellUsMoreForm = (props: any) => {
         if (!err) {
           navigation.navigate(routes.successPage, {
             user: res,
+            screen: 'auth',
             title: 'You just created your Rise account',
             description: 'Welcome to Rise, let`s take you home',
           });
@@ -181,7 +182,6 @@ export const TellUsMoreForm = (props: any) => {
                 placeholder: 'Nick name',
                 onChangeText: formikprops.handleChange('nickName'),
                 value: formikprops.values.nickName,
-                
               }}
               isError={formikprops.errors.nickName ? true : false}
               error={formikprops.errors.nickName}

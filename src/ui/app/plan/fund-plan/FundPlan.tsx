@@ -1,39 +1,16 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {View, Text, StyleSheet, FlatList, Pressable} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import colors from '../../../../core/config/colors';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import AppBtn from '../../../components/AppBtn';
+import routes from '../../../../routes/routes';
+import {useIsFocused} from '@react-navigation/native';
 
-export const FundPlan = () => {
+export const FundPlan = props => {
   const refRBSheet = useRef<RBSheet>(null);
-
-  const data = [
-    {
-      key: 0,
-      name: 'Plan some stuffs',
-      amount: '$4,000',
-      backgroundImage: require('../../../../../assets/images/welcome/quality-asset.png'), // Set your image path here
-    },
-    {
-      key: 1,
-      name: 'Plan a wedding',
-      amount: '$4,100',
-      backgroundImage: require('../../../../../assets/images/welcome/quality-asset.png'), // Set your image path here
-    },
-    {
-      key: 2,
-      name: 'Make Plans',
-      amount: '$2,100',
-      backgroundImage: require('../../../../../assets/images/welcome/quality-asset.png'), // Set your image path here
-    },
-    {
-      key: 4,
-      name: 'Go for it',
-      amount: '$3,000',
-      backgroundImage: require('../../../../../assets/images/welcome/quality-asset.png'), // Set your image path here
-    },
-  ];
+  const {navigation} = props;
+  const isFocused = useIsFocused();
 
   const bank = [
     {
@@ -54,23 +31,16 @@ export const FundPlan = () => {
     {
       id: 0,
       key: 0,
-      bank: 'GT Bank PLC',
-      accountName: 'Bosun Olanrewaju',
-      accountNumber: '012312422',
+      bank: '15 ',
+      accountName: 'Naira Bank Transfer',
+      accountNumber: 'Timeline',
     },
     {
       id: 1,
       key: 1,
-      bank: 'Fidelity Bank',
-      accountName: 'Bosun Olanrewaju',
-      accountNumber: '315342134124',
-    },
-    {
-      id: 2,
-      key: 2,
-      bank: 'Keystone Bank PLC',
-      accountName: 'Bosun Olanrewaju',
-      accountNumber: '34564653463',
+      bank: '12',
+      accountName: 'Naira Debit Card',
+      accountNumber: 'Timeline',
     },
   ];
 
@@ -80,13 +50,13 @@ export const FundPlan = () => {
         style={styles.itemContainers}
         onPress={() => refRBSheet.current?.open()}>
         <View style={styles.infoContainers}>
+          <Text style={styles.accountNames}>{item.accountName}</Text>
+
           <View style={styles.infoRows}>
-            <Text style={styles.accountNumbers}>{item.accountNumber} .</Text>
+            <Text style={styles.accountNumbers}>{item.accountNumber} -</Text>
             <Text style={styles.bankNames}>{item.bank}</Text>
           </View>
-          <Text style={styles.accountNames}>{item.accountName}</Text>
         </View>
-        <FontAwesome name={'arrow-right'} size={30} color={colors.grey} />
       </Pressable>
     );
   };
@@ -106,6 +76,10 @@ export const FundPlan = () => {
       </>
     );
   };
+
+  useEffect(() => {
+    refRBSheet.current?.open();
+  }, [isFocused]);
   return (
     <>
       <View style={styles.parentDiv}>
@@ -115,7 +89,10 @@ export const FundPlan = () => {
             size={30}
             color={colors.primary}
             style={styles.backIcon}
-            onPress={() => console.log('nice')}
+            onPress={() => {
+              refRBSheet.current?.close();
+              navigation.navigate(routes.home);
+            }}
           />
           <Text style={styles.headerText}>Fund Wallet</Text>
         </View>
@@ -168,7 +145,10 @@ export const FundPlan = () => {
 
             <AppBtn
               title="Accept & Continue"
-              onPress={() => console.log('sdfds')}
+              onPress={() => {
+                refRBSheet.current?.close();
+                navigation.navigate(routes.selectBank);
+              }}
             />
           </View>
         </RBSheet>

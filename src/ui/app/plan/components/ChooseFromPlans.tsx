@@ -1,44 +1,53 @@
-import React from 'react';
-import {View, Text, StyleSheet, FlatList, ImageBackground} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  ImageBackground,
+  Pressable,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import colors from '../../../../core/config/colors';
+import routes from '../../../../routes/routes';
+import {getEntry} from '../../../../core/services/dataGenerator';
+import {UserAccountContext} from '../../../../core/context/UserAcccountContext';
+import {useIsFocused} from '@react-navigation/native';
 
-export const ChooseFromPlans = () => {
-  const data = [
-    {
-      key: 0,
-      name: 'Plan some stuffs',
-      amount: '$4,000',
-      backgroundImage: require('../../../../../assets/images/welcome/quality-asset.png'),
-    },
-    {
-      key: 1,
-      name: 'Plan a wedding',
-      amount: '$4,100',
-      backgroundImage: require('../../../../../assets/images/welcome/quality-asset.png'),
-    },
-    {
-      key: 2,
-      name: 'Make Plans',
-      amount: '$2,100',
-      backgroundImage: require('../../../../../assets/images/welcome/quality-asset.png'),
-    },
-    {
-      key: 4,
-      name: 'Go for it',
-      amount: '$3,000',
-      backgroundImage: require('../../../../../assets/images/welcome/quality-asset.png'),
-    },
-  ];
+export const ChooseFromPlans = props => {
+  const {navigation} = props;
+  const [allPlans, setAllPlans] = useState([]);
+  const isFocused = useIsFocused();
+  const {users} = useContext(UserAccountContext) ?? {};
+
+  useEffect(() => {
+    getAllPlans();
+  }, [isFocused]);
+
+  const getAllPlans = () => {
+    try {
+      getEntry('plans', (res: any, err: any) => {
+        if (!err) {
+          const response = res;
+          setAllPlans(response.data.items);
+        }
+      });
+    } catch (error) {}
+  };
 
   const renderItem = ({item}) => (
-    <ImageBackground
-      source={item.backgroundImage}
-      style={styles.item}
-      imageStyle={{borderRadius: 8}}>
-      <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.amount}>{item.amount}</Text>
-    </ImageBackground>
+    <TouchableWithoutFeedback
+      onPress={() => navigation.navigate(routes.selectBank)}>
+      <ImageBackground
+        source={require('../../../../../assets/images/welcome/performance.png')}
+        style={styles.item}
+        imageStyle={{borderRadius: 8}}>
+        <Text style={styles.name}>{item.plan_name}sdfds</Text>
+        <Text style={styles.amount}>{item.target_amount}</Text>
+      </ImageBackground>
+    </TouchableWithoutFeedback>
   );
 
   return (
@@ -50,7 +59,7 @@ export const ChooseFromPlans = () => {
             size={20}
             color={colors.primary}
             style={styles.backIcon}
-            onPress={() => console.log('nice')}
+            onPress={() => navigation.navigate(routes.home)}
           />
           <Text style={styles.headerText}>Choose From Plans</Text>
         </View>
@@ -60,12 +69,14 @@ export const ChooseFromPlans = () => {
       </View>
 
       <View style={styles.container}>
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-          numColumns={2}
-        />
+        {allPlans.length > 0 && (
+          <FlatList
+            data={allPlans}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            numColumns={2}
+          />
+        )}
       </View>
     </>
   );
@@ -131,13 +142,13 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 15,
-    color: colors.white,
+    color: colors.primary,
     marginTop: 90,
     fontFamily: 'DMSans Regular',
   },
   amount: {
     fontSize: 18,
-    color: colors.white,
+    color: colors.primary,
     fontFamily: 'DMSans Regular',
   },
 });
