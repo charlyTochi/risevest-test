@@ -2,8 +2,11 @@ import React from 'react';
 import {View, Text, StyleSheet, FlatList, Image} from 'react-native';
 import colors from '../../../../core/config/colors';
 import AppBtn from '../../../components/AppBtn';
+import routes from '../../../../routes/routes';
 
-export const CreatePlan = () => {
+export const CreatePlan = (props) => {
+  const {navigation} = props;
+
   const data = [
     {
       id: 0,
@@ -69,7 +72,7 @@ export const CreatePlan = () => {
           title="Continue"
           moreButtonStyles={{width: 350}}
           onPress={() => {
-            console.log('sdfsd');
+            navigation.navigate(routes.planForm);
           }}
         />
       </View>

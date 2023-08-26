@@ -1,23 +1,21 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  StyleSheet,
-  Image,
-  Pressable,
-} from 'react-native';
+import {View, Text, StyleSheet, Image, Pressable} from 'react-native';
 import colors from '../../../../../core/config/colors';
 import AppBtn from '../../../../components/AppBtn';
 import Input from '../../../../components/AppInput';
 import {Formik} from 'formik';
+import {createEntry} from '../../../../../core/services/dataGenerator';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {ModalSelect} from '../../../../components/ModalSelect';
 
-export const PlanForm = () => {
+export const PlanForm = props => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [step1Value, setStep1Value] = useState('');
-  const [step2Value, setStep2Value] = useState('');
-  const [step3Value, setStep3Value] = useState('');
+
+  const placeholders = ['Investment', 'Amount', 'Date'];
+  const fieldNames = ['investment', 'amount', 'date'];
+  const [isBusy, setIsBusy] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [isDatePickerOpen, setDatePickerOpen] = useState(false);
 
   const handleNextStep = () => {
     if (currentStep < 3) {
@@ -31,25 +29,64 @@ export const PlanForm = () => {
     }
   };
 
-  const calculateProgressBarWidth = () => {
-    if (currentStep === 1) {
-      return '30%'; // Fills a little on first step
-    } else if (currentStep === 2) {
-      return '70%'; // Half filled on the second step
-    } else {
-      return '100%'; // Fully filled on the third step
-    }
-  };
-
   const validate = formValues => {
-    if (!formValues.email) {
+    if (!formValues.investment) {
+      // Add your validation logic here
     }
   };
 
   const handleSubmit = async values => {
-    console.log('sfsfd', values);
+    try {
+      setIsBusy(true);
+
+      const payload = {
+        plan_name: values.investment,
+        target_amount: values.amount,
+        maturity_date: values.date,
+      };
+
+      createEntry('plans', payload, (res: any, err: any) => {
+        if (!err) {
+          const response = res;
+          setIsBusy(false);
+          console.log('good', response);
+        } else {
+          setIsBusy(false);
+          console.log('error', err);
+        }
+      });
+    } catch (error) {
+      setIsBusy(false);
+    }
   };
 
+  const closeDatePicker = () => {
+    setDatePickerOpen(false);
+  };
+
+  const handleDateChange = (
+    date: string | number | React.SetStateAction<Date>,
+  ) => {
+    const parsedDate = new Date(date);
+    console.log(parsedDate);
+    setSelectedDate(parsedDate);
+
+    // Input date string
+    var inputDateString = parsedDate;
+
+    // Create a Date object from the input string
+    var inputDate = new Date(inputDateString);
+
+    // Extract year, month, and day components
+    var year = inputDate.getUTCFullYear();
+    var month = (inputDate.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are zero-based, so add 1
+    var day = inputDate.getUTCDate().toString().padStart(2, '0');
+
+    // Create the formatted date string
+    var formattedDate = month + '-' + day + '-' + year;
+
+    console.log(formattedDate);
+  };
   return (
     <>
       <View style={styles.parentDiv}>
@@ -79,98 +116,89 @@ export const PlanForm = () => {
       <View style={styles.container}>
         <View style={styles.progressBarContainer}>
           <View
-            style={[styles.progressBar, {width: calculateProgressBarWidth()}]}
+            style={[styles.progressBar, {width: `${(currentStep / 3) * 100}%`}]}
           />
         </View>
         {currentStep === 1 && (
           <>
             <Text style={styles.label}>What are we saving for</Text>
-            <Formik
-              validateOnChange={false}
-              validate={values => validate(values)}
-              initialValues={{
-                investment: '',
-              }}
-              onSubmit={values => {
-                handleSubmit(values);
-              }}>
-              {formikprops => (
-                <>
-                  <Input
-                    textInputProps={{
-                      placeholder: 'Investment',
-                      onChangeText: formikprops.handleChange('investment'),
-                    }}
-                    isError={formikprops.errors.investment ? true : false}
-                    isVisible={formikprops.values.investment.length > 0}
-                    error={formikprops.errors.investment}
-                  />
-                </>
-              )}
-            </Formik>
           </>
         )}
         {currentStep === 2 && (
           <>
             <Text style={styles.label}>How much do you need</Text>
-            <Formik
-              validateOnChange={false}
-              validate={values => validate(values)}
-              initialValues={{
-                investment: '',
-              }}
-              onSubmit={values => {
-                handleSubmit(values);
-              }}>
-              {formikprops => (
-                <>
-                  <Input
-                    textInputProps={{
-                      placeholder: 'Investment',
-                      onChangeText: formikprops.handleChange('investment'),
-                    }}
-                    isError={formikprops.errors.investment ? true : false}
-                    isVisible={formikprops.values.investment.length > 0}
-                    error={formikprops.errors.investment}
-                  />
-                </>
-              )}
-            </Formik>
           </>
         )}
         {currentStep === 3 && (
           <>
             <Text style={styles.label}>When do you want to withdraw</Text>
-            <Formik
-              validateOnChange={false}
-              validate={values => validate(values)}
-              initialValues={{
-                investment: '',
-              }}
-              onSubmit={values => {
-                handleSubmit(values);
-              }}>
-              {formikprops => (
-                <>
-                  <Input
-                    textInputProps={{
-                      placeholder: 'Investment',
-                      onChangeText: formikprops.handleChange('investment'),
-                    }}
-                    isError={formikprops.errors.investment ? true : false}
-                    isVisible={formikprops.values.investment.length > 0}
-                    error={formikprops.errors.investment}
-                  />
-                </>
-              )}
-            </Formik>
           </>
         )}
 
-        <AppBtn
-          title={currentStep === 3 ? 'Finish' : 'Next'}
-          moreButtonStyles={{width: 350, marginTop: 30}}
-          onPress={handleNextStep}
+        <Formik
+          validateOnChange={false}
+          validate={values => validate(values)}
+          initialValues={{
+            investment: '',
+            amount: '',
+            date: '',
+          }}
+          onSubmit={values => {
+            handleSubmit(values);
+          }}>
+          {formikprops => (
+            <>
+              <Input
+                prefix={
+                  currentStep === 2 ? (
+                    <Text style={{color: colors.primary}}>₦</Text>
+                  ) : null
+                }
+                textInputProps={{
+                  keyboardType: currentStep === 2 ? 'phone-pad' : 'default',
+                  placeholder: placeholders[currentStep - 1],
+                  onChangeText: formikprops.handleChange(
+                    fieldNames[currentStep - 1],
+                  ),
+                  value:
+                    currentStep === 3
+                      ? selectedDate.toDateString()
+                      : formikprops.values[fieldNames[currentStep - 1]],
+                }}
+                isError={
+                  formikprops.errors[fieldNames[currentStep - 1]] ? true : false
+                }
+                isVisible={
+                  formikprops.values[fieldNames[currentStep - 1]].length > 0
+                }
+                error={formikprops.errors[fieldNames[currentStep - 1]]}
+                suffixIcon={
+                  currentStep === 3 ? (
+                    <FontAwesome
+                      name={'calendar'}
+                      size={20}
+                      color={colors.primary}
+                      onPress={() => setDatePickerOpen(true)}
+                    />
+                  ) : null
+                }
+              />
+
+              <AppBtn
+                title={currentStep === 3 ? 'Finish' : 'Next'}
+                moreButtonStyles={{width: 350, marginTop: 30}}
+                onPress={
+                  currentStep !== 3 ? handleNextStep : formikprops.handleSubmit
+                }
+              />
+            </>
+          )}
+        </Formik>
+        <ModalSelect
+          date={selectedDate}
+          onDateChange={handleDateChange}
+          open={isDatePickerOpen}
+          onClose={closeDatePicker}
         />
       </View>
     </>

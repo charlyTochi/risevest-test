@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
@@ -13,10 +13,27 @@ import colors from '../../../core/config/colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AppBtn from '../../components/AppBtn';
 import {PlanList} from './components/Plan/PlanList';
+import {getEntry} from '../../../core/services/dataGenerator';
 
-export const HomeScreen = () => {
+export const HomeScreen = (props) => {
+  const {navigation} = props;
   const [showPassword, setShowPassword] = useState(false);
+  const [allPlans, setAllPlans] = useState([]);
 
+  useEffect(() => {
+    getAllPlans();
+  }, []);
+
+  const getAllPlans = () => {
+    try {
+      getEntry('plans', (res: any, err: any) => {
+        if (!err) {
+          const response = res;
+          setAllPlans(response.data.items);
+        }
+      });
+    } catch (error) {}
+  };
   return (
     <View style={styles.container}>
       <ScrollView
@@ -100,7 +117,7 @@ export const HomeScreen = () => {
           <Text style={styles.planDescription}>
             Start your investment journey by creating a plan
           </Text>
-          <PlanList />
+          <PlanList plans={allPlans} navigation={navigation} />
         </View>
 
         <View style={styles.helpContainer}>

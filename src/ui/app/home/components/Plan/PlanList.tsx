@@ -1,31 +1,20 @@
 import React from 'react';
-import {View, Text, FlatList, StyleSheet, Image} from 'react-native';
+import {View, Text, FlatList, StyleSheet, Image, Pressable} from 'react-native';
 import colors from '../../../../../core/config/colors';
+import routes from '../../../../../routes/routes';
 
-export const PlanList = () => {
-  const plans = [
-    {id: 1, name: 'plan'},
-    {id: 2, name: 'Create a'},
-    {id: 3, name: 'Plan 3'},
-    {id: 3, name: 'Plan 3'},
-    {id: 3, name: 'Plan 3'},
-    {id: 3, name: 'Plan 3'},
-    {id: 3, name: 'Plan 3'},
-    {id: 3, name: 'Plan 3'},
-    {id: 3, name: 'Plan 3'},
-    {id: 3, name: 'Plan 3'},
-    {id: 3, name: 'Plan 3'},
-    {id: 3, name: 'Plan 3'},
-    {id: 3, name: 'Plan 3'},
-  ];
+export const PlanList = ({plans, navigation}) => {
 
   return (
     <View style={styles.container}>
-      {plans?.length !== 0 ? (
+      {plans?.length === 0 ? (
         <View style={styles.planCard}>
-          <Image
-            source={require('../../../../../../assets/images/Home/add.png')}
-          />
+          <Pressable onPress={() => navigation.navigate(routes.createPlan)}>
+            <Image
+              source={require('../../../../../../assets/images/Home/add.png')}
+            />
+          </Pressable>
+
           <Text style={styles.emptyText}>Create an investment plan</Text>
         </View>
       ) : (

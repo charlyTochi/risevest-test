@@ -181,6 +181,7 @@ export const TellUsMoreForm = (props: any) => {
                 placeholder: 'Nick name',
                 onChangeText: formikprops.handleChange('nickName'),
                 value: formikprops.values.nickName,
+                
               }}
               isError={formikprops.errors.nickName ? true : false}
               error={formikprops.errors.nickName}
