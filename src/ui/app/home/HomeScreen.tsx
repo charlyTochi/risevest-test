@@ -328,6 +328,8 @@ const styles = StyleSheet.create({
   },
   viewAllText: {
     fontSize: 15,
+    fontFamily: 'DMSans Regular',
+    fontWeight: '400',
   },
   planDescription: {
     fontSize: 15,

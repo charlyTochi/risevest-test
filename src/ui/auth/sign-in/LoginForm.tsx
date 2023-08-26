@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, Pressable} from 'react-native';
 import {Formik} from 'formik';
 import colors from '../../../core/config/colors';
 import AppBtn from '../../components/AppBtn';
@@ -9,6 +9,7 @@ import Input from '../../components/AppInput';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {createEntryNoHeader} from '../../../core/services/dataGenerator';
 import {UserAccountContext} from '../../../core/context/UserAcccountContext';
+import routes from '../../../routes/routes';
 
 export const LoginForm = (props: any) => {
   const {navigation} = props;
@@ -119,8 +120,9 @@ export const LoginForm = (props: any) => {
                 }
               />
             </View>
-
-            <Text style={styles.passwordText}>I forgot my password</Text>
+            <Pressable onPress={() => navigation.navigate(routes.createPin)}>
+              <Text style={styles.passwordText}>I forgot my password</Text>
+            </Pressable>
           </View>
         )}
       </Formik>

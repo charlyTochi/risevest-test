@@ -41,9 +41,7 @@ export const SignUpForm = (props: any) => {
     ) {
       errors['email'] = 'Invalid email address';
     }
-    if (formValues.password.length < 8) {
-      errors['password'] = 'Password length must be more than eight';
-    } else if (
+    if (
       !/^(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~])(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/.test(
         formValues.password,
       )

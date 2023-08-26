@@ -1,4 +1,3 @@
-import { ChooseFromPlans } from './../ui/app/plan/components/ChooseFromPlans';
 export default {
   signUpScreen: 'sign-up',
   OtpScreen: 'enter-otp',

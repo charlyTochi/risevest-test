@@ -10,13 +10,8 @@ import routes from '../routes';
 import {ViewPlan} from '../../ui/app/plan/create-plan/components/ViewPlan';
 import {ChooseFromPlans} from '../../ui/app/plan/components/ChooseFromPlans';
 import {SelectBank} from '../../ui/app/plan/components/SelectBank';
-import {Splash} from '../../ui/auth/splash/SplashScreen';
 
 const appRouter = [
-  {
-    route: routes.splashScreen,
-    component: Splash,
-  },
   {
     route: routes.home,
     component: Home,
@@ -29,6 +24,7 @@ const appRouter = [
     route: routes.fundPlan,
     component: FundPlan,
   },
+
   {
     route: routes.viewPlan,
     component: ViewPlan,

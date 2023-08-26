@@ -10,7 +10,9 @@ export const Splash = props => {
   const {loginUserToken} = useContext(UserAccountContext);
 
   useEffect(() => {
-    navigation.navigate(loginUserToken ? routes.home : routes.welcomeScreen);
+    setTimeout(() => {
+      navigation.navigate(loginUserToken ? routes.home : routes.welcomeScreen);
+    }, 3000);
   }, []);
 
   return (

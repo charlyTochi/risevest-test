@@ -1,3 +1,4 @@
+import {CreatePin} from '../../ui/app/create-pin/CreatePin';
 import {Login} from '../../ui/auth/sign-in/Login';
 import {SignUp} from '../../ui/auth/sign-up/SignUp';
 import {Splash} from '../../ui/auth/splash/SplashScreen';
@@ -16,6 +17,10 @@ const authRouter = [
     component: Login,
   },
   {
+    route: routes.welcomeScreen,
+    component: WelcomeScreen,
+  },
+  {
     route: routes.successPage,
     component: SuccessPage,
   },
@@ -25,16 +30,13 @@ const authRouter = [
   },
 
   {
-    route: routes.welcomeScreen,
-    component: WelcomeScreen,
-  },
-
-  {
     route: routes.tellUsMore,
     component: TellUsMore,
   },
-
- 
+  {
+    route: routes.createPin,
+    component: CreatePin,
+  },
 ];
 
 export default authRouter;
