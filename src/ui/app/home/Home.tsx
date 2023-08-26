@@ -7,9 +7,9 @@ import {StyleSheet, View} from 'react-native';
 import colors from '../../../core/config/colors';
 import {HomeScreen} from './HomeScreen';
 import {UserAccountContext} from '../../../core/context/UserAcccountContext';
-import { PlanList } from './components/Plan/PlanList';
-import { ChooseFromPlans } from '../plan/components/ChooseFromPlans';
-import { FundPlan } from '../plan/fund-plan/FundPlan';
+import {PlanList} from './components/Plan/PlanList';
+import {ChooseFromPlans} from '../plan/components/ChooseFromPlans';
+import {FundPlan} from '../plan/fund-plan/FundPlan';
 const Tab = createBottomTabNavigator();
 
 export const Home = () => {
@@ -77,7 +77,7 @@ export const Home = () => {
         />
         <Tab.Screen
           name="Feed"
-          component={HomeScreen}
+          component={ChooseFromPlans}
           options={{
             tabBarIcon: ({focused}) => (
               <MaterialIcons

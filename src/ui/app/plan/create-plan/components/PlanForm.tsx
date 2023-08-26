@@ -33,7 +33,15 @@ export const PlanForm = props => {
     }
   };
 
-  const validate = formValues => {};
+  const validate = formValues => {
+    const errors = {};
+
+    if (currentStep === 1 && !formValues.investment) {
+      errors.investment = 'Investment field is required';
+    }
+
+    return errors;
+  };
 
   const handleSubmit = async values => {
     try {
@@ -188,18 +196,28 @@ export const PlanForm = props => {
                   Maturity date must be at least one year ahead.
                 </Text>
               )}
-              {currentStep === 1 && formikprops.errors.investment && (
-                <Text style={styles.errorText}>
-                  {formikprops.errors.investment}
-                </Text>
-              )}
+              {currentStep === 1 &&
+                formikprops.touched.investment &&
+                formikprops.errors.investment && (
+                  <Text style={styles.errorText}>
+                    {formikprops.errors.investment}
+                  </Text>
+                )}
+
               <AppBtn
                 title={currentStep === 3 ? 'Finish' : 'Next'}
-                disabled={currentStep === 1 && !formikprops.values.investment}
-                moreButtonStyles={{width: 350, marginTop: 30}}
-                onPress={
-                  currentStep !== 3 ? handleNextStep : formikprops.handleSubmit
+                isDisabled={
+                  (currentStep === 1 && !formikprops.values.investment) ||
+                  (currentStep === 2 && !formikprops.values.amount)
                 }
+                moreButtonStyles={{width: 350, marginTop: 30}}
+                onPress={() => {
+                  if (currentStep === 3) {
+                    formikprops.handleSubmit();
+                  } else {
+                    handleNextStep();
+                  }
+                }}
               />
             </>
           )}

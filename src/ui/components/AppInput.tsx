@@ -65,10 +65,6 @@ const Input: React.FC<InputProps> = ({
   return (
     <>
       <View style={mainViewStyle}>
-        <OverlayText
-          visible={isFocused || isVisible}
-          text={textInputProps.placeholder || ''}
-        />
         <View style={styles.prefix}>{prefix}</View>
         <TextInput
           placeholderTextColor={colors.black}
