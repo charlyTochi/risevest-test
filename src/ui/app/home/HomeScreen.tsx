@@ -29,6 +29,8 @@ export const HomeScreen = (props) => {
       getEntry('plans', (res: any, err: any) => {
         if (!err) {
           const response = res;
+          console.log('response', response.data);
+          
           setAllPlans(response.data.items);
         }
       });

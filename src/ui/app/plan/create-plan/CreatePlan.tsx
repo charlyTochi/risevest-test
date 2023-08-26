@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, Text, StyleSheet, FlatList, Image} from 'react-native';
+import {View, Text, StyleSheet, FlatList, Image, Pressable} from 'react-native';
 import colors from '../../../../core/config/colors';
 import AppBtn from '../../../components/AppBtn';
 import routes from '../../../../routes/routes';
 
-export const CreatePlan = (props) => {
+export const CreatePlan = props => {
   const {navigation} = props;
 
   const data = [
@@ -48,13 +48,15 @@ export const CreatePlan = (props) => {
   return (
     <>
       <View style={styles.parentDiv}>
-        <View style={styles.headerDiv}>
+        <Pressable
+          onPress={() => navigation.navigate(routes.home)}
+          style={styles.headerDiv}>
           <Image
             source={require('../../../../../assets/images/cancel.png')}
             style={{marginLeft: 20, marginTop: 10}}
           />
           <Text style={styles.headerText}>Create a plan</Text>
-        </View>
+        </Pressable>
         <Text style={styles.subheading}>Reach your goals faster</Text>
 
         <Image

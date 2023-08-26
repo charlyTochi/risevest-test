@@ -7,15 +7,20 @@ import {Formik} from 'formik';
 import {createEntry} from '../../../../../core/services/dataGenerator';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {ModalSelect} from '../../../../components/ModalSelect';
+import routes from '../../../../../routes/routes';
 
 export const PlanForm = props => {
+  const {navigation} = props;
+
   const [currentStep, setCurrentStep] = useState(1);
 
   const placeholders = ['Investment', 'Amount', 'Date'];
   const fieldNames = ['investment', 'amount', 'date'];
   const [isBusy, setIsBusy] = useState(false);
+  const [isValidDate, setIsValidDate] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isDatePickerOpen, setDatePickerOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleNextStep = () => {
     if (currentStep < 3) {
@@ -29,20 +34,20 @@ export const PlanForm = props => {
     }
   };
 
-  const validate = formValues => {
-    if (!formValues.investment) {
-      // Add your validation logic here
-    }
-  };
+  const validate = formValues => {};
 
   const handleSubmit = async values => {
     try {
+      if (!isValidDate) {
+        throw new Error('Error');
+      }
       setIsBusy(true);
+      console.log(selectedDate);
 
       const payload = {
         plan_name: values.investment,
         target_amount: values.amount,
-        maturity_date: values.date,
+        maturity_date: selectedDate,
       };
 
       createEntry('plans', payload, (res: any, err: any) => {
@@ -68,25 +73,33 @@ export const PlanForm = props => {
     date: string | number | React.SetStateAction<Date>,
   ) => {
     const parsedDate = new Date(date);
-    console.log(parsedDate);
+
+    const selectedMaturityDate = new Date(date);
+    const currentDate = new Date();
+
+    // Calculate one year from the current date
+    const oneYearAhead = new Date(currentDate);
+    oneYearAhead.setFullYear(currentDate.getFullYear() + 1);
+
+    if (selectedMaturityDate >= oneYearAhead) {
+      setIsValidDate(true);
+      console.log('Selected maturity date is at least one year ahead.');
+    } else {
+      setIsValidDate(false);
+      console.log('Selected maturity date is not one year ahead.');
+    }
+
+    const originalDate = new Date(date);
+
+    const year = originalDate.getUTCFullYear();
+    const month = (originalDate.getUTCMonth() + 1).toString().padStart(2, '0');
+    const day = originalDate.getUTCDate().toString().padStart(2, '0');
+
+    const convertedDate = `${year}-${month}-${day}`;
+    console.log(convertedDate);
     setSelectedDate(parsedDate);
-
-    // Input date string
-    var inputDateString = parsedDate;
-
-    // Create a Date object from the input string
-    var inputDate = new Date(inputDateString);
-
-    // Extract year, month, and day components
-    var year = inputDate.getUTCFullYear();
-    var month = (inputDate.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are zero-based, so add 1
-    var day = inputDate.getUTCDate().toString().padStart(2, '0');
-
-    // Create the formatted date string
-    var formattedDate = month + '-' + day + '-' + year;
-
-    console.log(formattedDate);
   };
+
   return (
     <>
       <View style={styles.parentDiv}>
@@ -103,10 +116,12 @@ export const PlanForm = props => {
           )}
 
           {currentStep === 1 && (
-            <Image
-              source={require('../../../../../../assets/images/cancel.png')}
-              style={{marginLeft: 20, marginTop: 10}}
-            />
+            <Pressable onPress={() => navigation.navigate(routes.createPlan)}>
+              <Image
+                source={require('../../../../../../assets/images/cancel.png')}
+                style={{marginLeft: 20, marginTop: 10}}
+              />
+            </Pressable>
           )}
 
           <Text style={styles.headerText}>Create a plan</Text>
@@ -166,7 +181,8 @@ export const PlanForm = props => {
                       : formikprops.values[fieldNames[currentStep - 1]],
                 }}
                 isError={
-                  formikprops.errors[fieldNames[currentStep - 1]] ? true : false
+                  currentStep === 3 &&
+                  formikprops.errors[fieldNames[currentStep - 1]]
                 }
                 isVisible={
                   formikprops.values[fieldNames[currentStep - 1]].length > 0
@@ -183,9 +199,19 @@ export const PlanForm = props => {
                   ) : null
                 }
               />
-
+              {!isValidDate && currentStep === 3 && (
+                <Text style={styles.errorText}>
+                  Maturity date must be at least one year ahead.
+                </Text>
+              )}
+              {currentStep === 1 && formikprops.errors.investment && (
+                <Text style={styles.errorText}>
+                  {formikprops.errors.investment}
+                </Text>
+              )}
               <AppBtn
                 title={currentStep === 3 ? 'Finish' : 'Next'}
+                disabled={currentStep === 1 && !formikprops.values.investment}
                 moreButtonStyles={{width: 350, marginTop: 30}}
                 onPress={
                   currentStep !== 3 ? handleNextStep : formikprops.handleSubmit
@@ -194,6 +220,7 @@ export const PlanForm = props => {
             </>
           )}
         </Formik>
+
         <ModalSelect
           date={selectedDate}
           onDateChange={handleDateChange}
@@ -253,5 +280,10 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontFamily: 'Hanken Grotesk Bold',
     color: colors.black,
+  },
+  errorText: {
+    color: colors.red,
+    fontSize: 14,
+    marginTop: 5,
   },
 });
