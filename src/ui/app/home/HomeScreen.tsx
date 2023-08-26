@@ -26,6 +26,8 @@ export const HomeScreen = props => {
   const isFocused = useIsFocused();
   const {users} = useContext(UserAccountContext) ?? {};
   useEffect(() => {
+    console.log('ser', users);
+
     getAllPlans();
   }, [isFocused]);
 
@@ -70,7 +72,7 @@ export const HomeScreen = props => {
           <View style={styles.bellContainer}>
             <FontAwesome
               name={'bell'}
-              size={30}
+              size={25}
               color={colors.primary}
               style={styles.bellIcon}
             />
@@ -86,7 +88,10 @@ export const HomeScreen = props => {
               onPress={() => setShowPassword(!showPassword)}
             />
           </View>
-          <Text style={styles.totalBalanceAmount}>$0.00</Text>
+          <Text style={styles.totalBalanceAmount}>
+            {' '}
+            {showPassword ? `₦${users?.total_balance}` : '*****'}
+          </Text>
           <View style={styles.separator} />
           <View style={styles.totalGainsRow}>
             <Text style={styles.totalGainsText}>Total Gains</Text>
@@ -112,6 +117,7 @@ export const HomeScreen = props => {
           borderColor={colors.offWhite}
           icon={'plus'}
           moreButtonStyles={styles.doneTxt}
+          onPress={() => console.log('test')}
         />
 
         <View style={styles.planContainer}>
@@ -121,6 +127,7 @@ export const HomeScreen = props => {
             </Text>
             <Pressable
               disabled={allPlans?.length === 0 ? true : false}
+              style={styles.viewAllContainer}
               onPress={() => navigation.navigate(routes.chooseFromPlans)}>
               <Text
                 style={[
@@ -131,6 +138,10 @@ export const HomeScreen = props => {
                 ]}>
                 View all plans
               </Text>
+              <Image
+                source={require('../../../../assets/images/Home/arrow-right.png')}
+                style={styles.totalGainsArrow}
+              />
             </Pressable>
           </View>
           <Text style={styles.planDescription}>
@@ -330,6 +341,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: 'DMSans Regular',
     fontWeight: '400',
+    marginRight: 10
   },
   planDescription: {
     fontSize: 15,
@@ -409,5 +421,9 @@ const styles = StyleSheet.create({
   },
   shareIcon: {
     alignSelf: 'center',
+  },
+  viewAllContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

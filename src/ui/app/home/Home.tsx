@@ -7,6 +7,9 @@ import {StyleSheet, View} from 'react-native';
 import colors from '../../../core/config/colors';
 import {HomeScreen} from './HomeScreen';
 import {UserAccountContext} from '../../../core/context/UserAcccountContext';
+import { PlanList } from './components/Plan/PlanList';
+import { ChooseFromPlans } from '../plan/components/ChooseFromPlans';
+import { FundPlan } from '../plan/fund-plan/FundPlan';
 const Tab = createBottomTabNavigator();
 
 export const Home = () => {
@@ -32,56 +35,55 @@ export const Home = () => {
         }}
         initialRouteName="Home">
         <Tab.Screen
-          name="."
+          name="Home"
           component={HomeScreen}
           options={{
             tabBarIcon: ({focused}) => (
               <View>
                 <MaterialIcons
                   name="home"
-                  color={focused ? colors.primary : colors.red}
+                  color={focused ? colors.primary : colors.grey}
                   size={25}
-                  style={{transform: [{rotateZ: '45deg'}]}}
                 />
               </View>
             ),
           }}
         />
         <Tab.Screen
-          name="Recipients"
-          component={HomeScreen}
+          name="Plans"
+          component={ChooseFromPlans}
           options={{
             tabBarIcon: ({focused}) => (
-              <Ionicons
-                name="md-person-add"
-                color={focused ? colors.primary : colors.red}
+              <MaterialIcons
+                name="ballot"
+                color={focused ? colors.primary : colors.grey}
                 size={25}
               />
             ),
           }}
         />
         <Tab.Screen
-          name="Recipiensts"
-          component={HomeScreen}
+          name="Wallet"
+          component={FundPlan}
           options={{
             tabBarIcon: ({focused}) => (
               <Ionicons
-                name="md-person-add"
-                color={focused ? colors.primary : colors.red}
+                name="wallet"
+                color={focused ? colors.primary : colors.grey}
                 size={25}
               />
             ),
           }}
         />
         <Tab.Screen
-          name="Promotions"
+          name="Feed"
           component={HomeScreen}
           options={{
             tabBarIcon: ({focused}) => (
-              <FontAwesome
-                name="group"
-                color={focused ? colors.primary : colors.white}
-                size={20}
+              <MaterialIcons
+                name="feed"
+                color={focused ? colors.primary : colors.grey}
+                size={25}
               />
             ),
           }}
@@ -91,10 +93,10 @@ export const Home = () => {
           component={HomeScreen}
           options={{
             tabBarIcon: ({focused}) => (
-              <Ionicons
+              <MaterialIcons
                 onPress={() => logout()}
-                name="md-settings"
-                color={focused ? colors.primary : colors.white}
+                name="person"
+                color={focused ? colors.primary : colors.grey}
                 size={25}
               />
             ),

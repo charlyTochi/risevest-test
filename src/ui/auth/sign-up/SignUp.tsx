@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   Text,
   View,
@@ -10,9 +10,16 @@ import {
 import colors from '../../../core/config/colors';
 import {globalStyles} from '../../../core/config/global-styles';
 import {SignUpForm} from './SignUpForm';
+import {STORAGE_KEYS} from '../../../core/enums/storage-keys';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const SignUp = (props: any) => {
   const {navigation} = props;
+
+  useEffect(() => {
+    AsyncStorage.setItem(STORAGE_KEYS.NOT_FIRST_OPEN, 'not_first_open');
+  }, []);
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

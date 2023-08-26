@@ -39,7 +39,7 @@ export const ChooseFromPlans = props => {
 
   const renderItem = ({item}) => (
     <TouchableWithoutFeedback
-      onPress={() => navigation.navigate(routes.selectBank)}>
+      onPress={() => navigation.navigate(routes.viewPlan, {plan: item})}>
       <ImageBackground
         source={require('../../../../../assets/images/welcome/performance.png')}
         style={styles.item}

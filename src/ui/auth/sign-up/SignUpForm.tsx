@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Text, Image} from 'react-native';
 import {Formik} from 'formik';
 import colors from '../../../core/config/colors';
 import AppBtn from '../../components/AppBtn';
@@ -99,8 +99,52 @@ export const SignUpForm = (props: any) => {
               }
             />
 
-            {/* <Text style={styles.passwordText}>* Minimum of 8 characters</Text> */}
+            <View style={styles.passwordRequirements}>
+              <View style={styles.passwordRequirement}>
+                {formikprops.values.password.length >= 8 ? (
+                  <Image
+                    source={require('../../../../assets/images/welcome/check.png')}
+                  />
+                ) : (
+                  <Image
+                    source={require('../../../../assets/images/welcome/empty-check.png')}
+                  />
+                )}
+                <Text style={styles.passwordRequirementText}>
+                  Minimum of 8 characters
+                </Text>
+              </View>
+              <View style={styles.passwordRequirement}>
+                {/[A-Z]/.test(formikprops.values.password) ? (
+                  <Image
+                    source={require('../../../../assets/images/welcome/check.png')}
+                  />
+                ) : (
+                  <Image
+                    source={require('../../../../assets/images/welcome/empty-check.png')}
+                  />
+                )}
 
+                <Text style={styles.passwordRequirementText}>
+                  One UPPERCASE character
+                </Text>
+              </View>
+              <View style={styles.passwordRequirement}>
+                {/[!@#$%^&*?]/.test(formikprops.values.password) ? (
+                  <Image
+                    source={require('../../../../assets/images/welcome/check.png')}
+                  />
+                ) : (
+                  <Image
+                    source={require('../../../../assets/images/welcome/empty-check.png')}
+                  />
+                )}
+
+                <Text style={styles.passwordRequirementText}>
+                  One unique character (!@#$%^&*?)
+                </Text>
+              </View>
+            </View>
             <View style={styles.createAccountView}>
               <AppBtn
                 title="Sign Up"
@@ -139,5 +183,21 @@ const styles = StyleSheet.create({
   },
   createAccountView: {
     marginTop: 20,
+  },
+  passwordRequirements: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    marginTop: 20,
+  },
+  passwordRequirement: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+    marginTop: 5,
+  },
+  passwordRequirementText: {
+    marginLeft: 5,
+    color: colors.black,
+    fontFamily: 'DMSans Regular',
   },
 });

@@ -3,6 +3,7 @@ import {
   FlatList,
   Image,
   Platform,
+  Pressable,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -55,10 +56,13 @@ export const ViewPlan = ({route, navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerDiv}>
-        <Image
-          source={require('../../../../../../assets/images/back-button.png')}
-          style={styles.headerImage}
-        />
+        <Pressable onPress={() => navigation.navigate(routes.home)}>
+          <Image
+            source={require('../../../../../../assets/images/back-button.png')}
+            style={styles.headerImage}
+          />
+        </Pressable>
+
         <Text style={styles.headerText}>Start a business</Text>
       </View>
       <ScrollView
