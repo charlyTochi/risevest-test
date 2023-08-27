@@ -42,12 +42,12 @@ export const SignUpForm = (props: any) => {
       errors['email'] = 'Invalid email address';
     }
     if (
-      !/^(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~])(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/.test(
+      !/^(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~])(?=.*[A-Z])(?=.*[a-z]).{8,}$/.test(
         formValues.password,
       )
     ) {
       errors['password'] =
-        'Password must contain at least one special character, one uppercase letter, one lowercase letter, one digit, and be at least 8 characters long.';
+        'Password must contain at least one special character, one uppercase letter, one lowercase letter, and be at least 8 characters long.';
     }
 
     return errors;

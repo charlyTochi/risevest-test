@@ -24,12 +24,23 @@ export const HomeScreen = props => {
   const [showPassword, setShowPassword] = useState(false);
   const [allPlans, setAllPlans] = useState([]);
   const isFocused = useIsFocused();
+  const [greetingMessage, setGreetingMessage] = useState('Good morning');
   const {users} = useContext(UserAccountContext) ?? {};
-  useEffect(() => {
-    console.log('ser', users);
 
+  useEffect(() => {
     getAllPlans();
   }, [isFocused]);
+
+  useEffect(() => {
+    const currentTime = new Date();
+    const currentHour = currentTime.getHours();
+
+    if (currentHour >= 12 && currentHour < 18) {
+      setGreetingMessage('Good afternoon');
+    } else if (currentHour >= 18) {
+      setGreetingMessage('Good evening');
+    }
+  }, []);
 
   const getAllPlans = () => {
     try {
@@ -41,6 +52,7 @@ export const HomeScreen = props => {
       });
     } catch (error) {}
   };
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -56,7 +68,7 @@ export const HomeScreen = props => {
         <View style={styles.header}>
           <View style={styles.greetingContainer}>
             <View style={styles.greetingRow}>
-              <Text style={styles.greetingText}>Good morning</Text>
+              <Text style={styles.greetingText}>{greetingMessage}</Text>
               <FontAwesome
                 name={'sun-o'}
                 size={20}
@@ -341,7 +353,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: 'DMSans Regular',
     fontWeight: '400',
-    marginRight: 10
+    marginRight: 10,
   },
   planDescription: {
     fontSize: 15,

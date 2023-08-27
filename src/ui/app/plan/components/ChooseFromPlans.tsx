@@ -63,19 +63,23 @@ export const ChooseFromPlans = props => {
           />
           <Text style={styles.headerText}>Choose From Plans</Text>
         </View>
-        <Text style={styles.description}>
-          Tap on any of the plans to select
-        </Text>
+        {allPlans.length > 0 && (
+          <Text style={styles.description}>
+            Tap on any of the plans to select
+          </Text>
+        )}
       </View>
 
       <View style={styles.container}>
-        {allPlans.length > 0 && (
+        {allPlans.length > 0 ? (
           <FlatList
             data={allPlans}
             renderItem={renderItem}
             keyExtractor={item => item.id}
             numColumns={2}
           />
+        ) : (
+          <Text style={{textAlign: 'center'}}>Sorry, no available plans</Text>
         )}
       </View>
     </>

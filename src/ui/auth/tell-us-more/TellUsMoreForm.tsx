@@ -34,7 +34,6 @@ export const TellUsMoreForm = (props: any) => {
   ) => {
     setSelectedDate(date);
     const parsedDate = new Date(date);
-    console.log(parsedDate);
 
     // Input date string
     var inputDateString = parsedDate;
@@ -50,7 +49,6 @@ export const TellUsMoreForm = (props: any) => {
     // Create the formatted date string
     var formattedDate = month + '-' + day + '-' + year;
 
-    console.log(formattedDate);
 
     setDOB(formattedDate);
     setIsDateSelected(true);

@@ -10,6 +10,7 @@ import routes from '../routes';
 import {ViewPlan} from '../../ui/app/plan/create-plan/components/ViewPlan';
 import {ChooseFromPlans} from '../../ui/app/plan/components/ChooseFromPlans';
 import {SelectBank} from '../../ui/app/plan/components/SelectBank';
+import { AppSuccessPage } from '../../ui/app/app-success/AppSuccessPage';
 
 const appRouter = [
   {
@@ -53,7 +54,7 @@ const appRouter = [
 
   {
     route: routes.successPage,
-    component: SuccessPage,
+    component: AppSuccessPage,
   },
 
   {
