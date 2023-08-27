@@ -13,7 +13,6 @@ import {FundPlan} from '../plan/fund-plan/FundPlan';
 const Tab = createBottomTabNavigator();
 
 export const Home = () => {
-  const {logout} = useContext(UserAccountContext) ?? {};
 
   return (
     <>
@@ -94,7 +93,6 @@ export const Home = () => {
           options={{
             tabBarIcon: ({focused}) => (
               <MaterialIcons
-                onPress={() => logout()}
                 name="person"
                 color={focused ? colors.primary : colors.grey}
                 size={25}

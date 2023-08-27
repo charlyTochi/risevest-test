@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
   FlatList,
   Image,
+  ImageBackground,
   Platform,
   Pressable,
   ScrollView,
@@ -52,16 +53,21 @@ export const ViewPlan = ({route, navigation}) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerDiv}>
-        <Pressable onPress={() => navigation.navigate(routes.home)}>
-          <Image
-            source={require('../../../../../../assets/images/back-button.png')}
-            style={styles.headerImage}
-          />
-        </Pressable>
+      <ImageBackground
+        source={require('../../../../../../assets/images/plan/gradient.png')}>
+        <View style={styles.headerDiv}>
+          <Pressable onPress={() => navigation.navigate(routes.home)}>
+            <Image
+              source={require('../../../../../../assets/images/white-back-arrow.png')}
+              style={styles.headerImage}
+            />
+          </Pressable>
 
-        <Text style={styles.headerText}>Start a business</Text>
-      </View>
+          <Text style={styles.headerText}>Start a business</Text>
+        </View>
+        <Text style={styles.description}>{plan?.plan_name}</Text>
+      </ImageBackground>
+
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         showsVerticalScrollIndicator={false}
@@ -159,7 +165,6 @@ const styles = StyleSheet.create({
   headerDiv: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    marginTop: 30,
     marginBottom: 30,
   },
   totalGainsArrow: {
@@ -170,7 +175,9 @@ const styles = StyleSheet.create({
   },
   headerImage: {
     marginLeft: 20,
-    marginTop: 10,
+    marginTop: 23,
+    height: 20,
+    width: 20,
   },
   planHeader: {
     flexDirection: 'row',
@@ -193,8 +200,16 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginTop: 15,
     fontFamily: 'Hanken Grotesk Bold',
-    color: colors.black,
+    color: colors.white,
     marginLeft: 80,
+  },
+  description: {
+    fontSize: 15,
+    fontFamily: 'Hanken Grotesk Bold',
+    color: colors.white,
+    textAlign: 'center',
+    marginBottom: 20,
+    textTransform: 'capitalize',
   },
   scrollView: {
     flexGrow: 1,

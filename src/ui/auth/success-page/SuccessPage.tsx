@@ -17,7 +17,7 @@ export const SuccessPage = ({route, navigation}) => {
       <Text style={styles.desc}>{description}</Text>
       <View style={styles.footer}>
         <AppBtn
-          title="Okay"
+          title={screen === 'auth' ? 'Okay' : 'View plan'}
           moreButtonStyles={{width: 350}}
           onPress={() => {
             screen === 'auth'
@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     color: colors.darkGrey,
     fontWeight: '400',
     marginTop: 10,
+    width: 200,
     textTransform: 'capitalize',
   },
   footer: {

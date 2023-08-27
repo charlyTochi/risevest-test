@@ -44,7 +44,7 @@ export const ChooseFromPlans = props => {
         source={require('../../../../../assets/images/welcome/performance.png')}
         style={styles.item}
         imageStyle={{borderRadius: 8}}>
-        <Text style={styles.name}>{item.plan_name}sdfds</Text>
+        <Text style={styles.name}>{item.plan_name}</Text>
         <Text style={styles.amount}>{item.target_amount}</Text>
       </ImageBackground>
     </TouchableWithoutFeedback>

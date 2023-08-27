@@ -1,10 +1,13 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Pressable, Text, StyleSheet, Image} from 'react-native';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import colors from '../../../core/config/colors';
 import {globalStyles} from '../../../core/config/global-styles';
+import routes from '../../../routes/routes';
 
-export const CreatePin = () => {
+export const CreatePin = props => {
+  const {navigation} = props;
+
   const [otp, setOtp] = useState('');
 
   const handleNumberPress = (number: string) => {
@@ -22,8 +25,19 @@ export const CreatePin = () => {
   };
 
   const verifyOtp = (value: string) => {
-    console.log(value);
+    navigation.navigate(routes.successPage, {
+      screen: 'auth',
+      title: 'You’ve created your PIN',
+      description:
+        'Keep your account safe with your secret PIN. Do not share this PIN with anyone.',
+    });
   };
+
+  useEffect(() => {
+    if (otp.length === 6) {
+      verifyOtp(otp);
+    }
+  }, [otp]);
 
   return (
     <View style={styles.container}>
@@ -45,11 +59,9 @@ export const CreatePin = () => {
         pinCount={6}
         autoFocusOnLoad={false}
         code={otp}
+        secureTextEntry={true}
         codeInputFieldStyle={styles.codeInput}
         onCodeChanged={code => setOtp(code)}
-        onCodeFilled={code => {
-          verifyOtp(code);
-        }}
       />
       <View style={styles.numberContainer}>
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, '.', 0].map(number => (
@@ -92,6 +104,7 @@ const styles = StyleSheet.create({
   codeInput: {
     borderColor: colors.primary,
     color: colors.black,
+    borderRadius: 10
   },
   otpInput: {
     width: '90%',
