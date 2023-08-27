@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
   },
   logo: {
     resizeMode: 'contain',
-    width: '100%',
+    width: 150,
+    height: 150,
     marginTop: '20%',
   },
   text: {
