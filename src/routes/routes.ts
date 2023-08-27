@@ -8,6 +8,7 @@ export default {
   loginOptionsScreen: 'login',
   tellUsMore: 'tell-us-more',
   successPage: 'success-page',
+  appSuccessPage: 'app-success',
   createPin: 'create-pin',
   fundPlan: 'fund-plan',
   createPlan: 'create-plan',

@@ -14,9 +14,7 @@ import {TellUsMoreForm} from './TellUsMoreForm';
 export const TellUsMore = (props: any) => {
   const {navigation} = props;
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.keyboardViewStyle}>
+    <KeyboardAvoidingView style={styles.keyboardViewStyle}>
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         showsVerticalScrollIndicator={false}

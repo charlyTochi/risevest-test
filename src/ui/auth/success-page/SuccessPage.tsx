@@ -20,9 +20,7 @@ export const SuccessPage = ({route, navigation}) => {
           title={screen === 'auth' ? 'Okay' : 'View plan'}
           moreButtonStyles={{width: 350}}
           onPress={() => {
-            screen === 'auth'
-              ? navigation.navigate(routes.loginOptionsScreen)
-              : navigation.navigate(routes.viewPlan, {plan});
+            navigation.navigate(routes.loginOptionsScreen);
           }}
         />
       </View>

@@ -1,6 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {View, Pressable, Text, StyleSheet, Image} from 'react-native';
-import OTPInputView from '@twotalltotems/react-native-otp-input';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Pressable,
+  Text,
+  TextInput,
+  StyleSheet,
+  Image,
+} from 'react-native';
 import colors from '../../../core/config/colors';
 import {globalStyles} from '../../../core/config/global-styles';
 import routes from '../../../routes/routes';
@@ -24,7 +30,7 @@ export const CreatePin = props => {
     }
   };
 
-  const verifyOtp = (value: string) => {
+  const verifyOtp = () => {
     navigation.navigate(routes.successPage, {
       screen: 'auth',
       title: 'You’ve created your PIN',
@@ -35,9 +41,15 @@ export const CreatePin = props => {
 
   useEffect(() => {
     if (otp.length === 6) {
-      verifyOtp(otp);
+      verifyOtp();
     }
   }, [otp]);
+
+  const codeInputStyles = Array.from({length: 6}, (_, index) => {
+    return otp.length > index
+      ? {...styles.codeInput, borderColor: colors.primary}
+      : {...styles.codeInput, borderColor: colors.offWhite};
+  });
 
   return (
     <View style={styles.container}>
@@ -54,15 +66,18 @@ export const CreatePin = props => {
           You’ll use this PIN to sign in and confirm transactions
         </Text>
       </View>
-      <OTPInputView
-        style={styles.otpInput}
-        pinCount={6}
-        autoFocusOnLoad={false}
-        code={otp}
-        secureTextEntry={true}
-        codeInputFieldStyle={styles.codeInput}
-        onCodeChanged={code => setOtp(code)}
-      />
+      <View style={styles.otpInput}>
+        {codeInputStyles.map((inputStyle, index) => (
+          <TextInput
+            key={index}
+            style={inputStyle}
+            value={otp[index] || ''}
+            secureTextEntry={true}
+            keyboardType="numeric"
+            maxLength={1}
+          />
+        ))}
+      </View>
       <View style={styles.numberContainer}>
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, '.', 0].map(number => (
           <Pressable
@@ -102,14 +117,18 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   codeInput: {
-    borderColor: colors.primary,
     color: colors.black,
-    borderRadius: 10
+    borderRadius: 10,
+    borderWidth: 2,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    marginHorizontal: 9,
+    textAlign: 'center'
   },
   otpInput: {
-    width: '90%',
-    height: 100,
-    marginHorizontal: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 20,
   },
   numberContainer: {
     flexDirection: 'row',

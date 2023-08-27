@@ -26,7 +26,7 @@ export const Review = ({route, navigation}) => {
       createEntry('plans', payload, (res: any, err: any) => {
         if (!err) {
           const response = res.data;
-          navigation.navigate(routes.successPage, {
+          navigation.navigate(routes.appSuccessPage, {
             plan: response,
             screen: 'app',
             title: 'You just created your plan.',

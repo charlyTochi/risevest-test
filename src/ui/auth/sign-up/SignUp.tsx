@@ -4,7 +4,6 @@ import {
   View,
   ScrollView,
   KeyboardAvoidingView,
-  Platform,
   StyleSheet,
 } from 'react-native';
 import colors from '../../../core/config/colors';
@@ -21,9 +20,7 @@ export const SignUp = (props: any) => {
   }, []);
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.keyboardViewStyle}>
+    <KeyboardAvoidingView style={styles.keyboardViewStyle}>
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         showsVerticalScrollIndicator={false}
@@ -54,7 +51,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignContent: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
   },
   scrollViewStyle: {
     flexGrow: 1,

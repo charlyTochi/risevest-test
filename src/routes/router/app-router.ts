@@ -53,7 +53,7 @@ const appRouter = [
   },
 
   {
-    route: routes.successPage,
+    route: routes.appSuccessPage,
     component: AppSuccessPage,
   },
 
