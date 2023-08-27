@@ -104,10 +104,12 @@ export const SignUpForm = (props: any) => {
                 {formikprops.values.password.length >= 8 ? (
                   <Image
                     source={require('../../../../assets/images/welcome/check.png')}
+                    style={{width: 15, height: 16}}
                   />
                 ) : (
                   <Image
                     source={require('../../../../assets/images/welcome/empty-check.png')}
+                    style={{width: 15, height: 16}}
                   />
                 )}
                 <Text style={styles.passwordRequirementText}>
@@ -118,10 +120,12 @@ export const SignUpForm = (props: any) => {
                 {/[A-Z]/.test(formikprops.values.password) ? (
                   <Image
                     source={require('../../../../assets/images/welcome/check.png')}
+                    style={{width: 15, height: 16}}
                   />
                 ) : (
                   <Image
                     source={require('../../../../assets/images/welcome/empty-check.png')}
+                    style={{width: 15, height: 16}}
                   />
                 )}
 
@@ -133,10 +137,12 @@ export const SignUpForm = (props: any) => {
                 {/[!@#$%^&*?]/.test(formikprops.values.password) ? (
                   <Image
                     source={require('../../../../assets/images/welcome/check.png')}
+                    style={{width: 15, height: 15}}
                   />
                 ) : (
                   <Image
                     source={require('../../../../assets/images/welcome/empty-check.png')}
+                    style={{width: 15, height: 15}}
                   />
                 )}
 

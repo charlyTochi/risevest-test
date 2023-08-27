@@ -25,7 +25,9 @@ export const Review = ({route, navigation}) => {
       setIsBusy(true);
       createEntry('plans', payload, (res: any, err: any) => {
         if (!err) {
+          const response = res.data;
           navigation.navigate(routes.successPage, {
+            plan: response,
             screen: 'app',
             title: 'You just created your plan.',
             description: `Well done, ${users.first_name} `,
@@ -33,6 +35,8 @@ export const Review = ({route, navigation}) => {
         }
       });
     } catch (error) {
+      console.log(err);
+
       setIsBusy(false);
     }
   };

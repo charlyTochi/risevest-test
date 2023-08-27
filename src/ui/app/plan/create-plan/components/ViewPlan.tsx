@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import colors from '../../../../../core/config/colors';
 import AppBtn from '../../../../components/AppBtn';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment';
 import routes from '../../../../../routes/routes';
 
@@ -50,8 +49,6 @@ export const ViewPlan = ({route, navigation}) => {
       </View>
     </View>
   );
-
-  console.log('plannnn', plan);
 
   return (
     <View style={styles.container}>
@@ -125,6 +122,19 @@ export const ViewPlan = ({route, navigation}) => {
           style={{alignSelf: 'center'}}
         />
 
+        <View style={styles.planHeader}>
+          <Text style={styles.planHeaderText}>{'Recent transactions'}</Text>
+          <Pressable
+            style={styles.viewAllContainer}
+            onPress={() => console.log('hi')}>
+            <Text style={[styles.viewAllText]}>View all</Text>
+            <Image
+              source={require('../../../../../../assets/images/colored-arrow.png')}
+              style={styles.totalGainsArrow}
+            />
+          </Pressable>
+        </View>
+
         <View style={{marginTop: 30, marginBottom: 60}}>
           <FlatList
             data={datas}
@@ -142,15 +152,42 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
   },
+  viewAllContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   headerDiv: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     marginTop: 30,
     marginBottom: 30,
   },
+  totalGainsArrow: {
+    alignSelf: 'center',
+    marginRight: 20,
+    width: 12,
+    height: 12,
+  },
   headerImage: {
     marginLeft: 20,
     marginTop: 10,
+  },
+  planHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  planHeaderText: {
+    fontSize: 18,
+    fontWeight: '400',
+    color: colors.black,
+    paddingHorizontal: 25,
+  },
+  viewAllText: {
+    fontSize: 15,
+    fontFamily: 'DMSans Regular',
+    fontWeight: '400',
+    marginRight: 10,
+    color: colors.primary,
   },
   headerText: {
     fontSize: 24,

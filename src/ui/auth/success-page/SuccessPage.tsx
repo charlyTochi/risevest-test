@@ -5,7 +5,7 @@ import AppBtn from '../../components/AppBtn';
 import routes from '../../../routes/routes';
 
 export const SuccessPage = ({route, navigation}) => {
-  const {title, description, screen} = route.params;
+  const {title, description, screen, plan} = route.params;
 
   return (
     <View style={styles.container}>
@@ -22,7 +22,7 @@ export const SuccessPage = ({route, navigation}) => {
           onPress={() => {
             screen === 'auth'
               ? navigation.navigate(routes.loginOptionsScreen)
-              : navigation.navigate(routes.home);
+              : navigation.navigate(routes.viewPlan, {plan});
           }}
         />
       </View>
